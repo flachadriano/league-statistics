@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import Match from './Match';
+import Match from './club/Match';
 
 export default {
     props: ['league', 'club'],

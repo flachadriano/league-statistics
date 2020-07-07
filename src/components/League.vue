@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import { loadClubs } from '../data/League';
+
 export default {
     props: ['league'],
     methods: {
@@ -24,9 +26,8 @@ export default {
                     if (x > y) return 1;
                     return 0;
                 };
-                let url = `https://raw.githubusercontent.com/openfootball/football.json/master/${this.league.year}/${this.league.file}`;
-                
-                return await fetch(url).then(r => r.json()).then(data => data.clubs).then(clubs => clubs.sort(sortByName));
+
+                return await loadClubs(this.league).then(clubs => clubs.sort(sortByName));
             } else {
                 return [];
             }

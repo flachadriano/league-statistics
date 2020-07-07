@@ -16,7 +16,7 @@ export default {
     },
     asyncComputed: {
         async clubs() {
-            if (this.league) {
+            if (Object.keys(this.league).length > 0) {
                 const sortByName = (a, b) => {
                     var x = a.name.toLowerCase();
                     var y = b.name.toLowerCase();

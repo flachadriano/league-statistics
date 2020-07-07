@@ -13,9 +13,9 @@ import { leagues, findLeague } from '../data/Leagues';
 export default {
     data() {
         return {
-            selected: '--',
+            selected: null,
             leagues: [
-                {code: 0, value: '--'},
+                {code: null, value: ''},
                 ...leagues
             ]
         }

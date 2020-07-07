@@ -1,19 +1,19 @@
 <template>
   <div id="app">
     <Leagues v-on:league="changedLeague" />
-    <Teams v-bind:league="league" />
+    <League v-bind:league="league" />
   </div>
 </template>
 
 <script>
 import Leagues from './components/Leagues';
-import Teams from './components/Teams';
+import League from './components/League';
 
 export default {
   name: 'App',
   components: {
     Leagues,
-    Teams
+    League
   },
   data() {
     return {

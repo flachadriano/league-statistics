@@ -1,16 +1,21 @@
 <template>
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center m-1">
         <div>
-            <h2>{{ club.name }} <a href="#" v-on:click.prevent="clear">close</a></h2>
-            <div>
-                <h3>Stastistics</h3>
-                <span>Win {{ winInLast6(matches||[]) }} in last 6 matches</span><br/>
-                <span>{{ scored(matches||[]) }} goals for</span><br/>
-                <span>{{ against(matches||[]) }} goals against</span><br/>
-                <span>Top score in a match {{ topScored(matches||[]) }}</span><br/>
-                <span>Top scored match {{ topScoredMatch(matches||[]) }}</span>
+            <h2 class="d-flex justify-content-center">
+                <span>{{ club.name }}</span>
+                <a class="close" href="#" v-on:click.prevent="clear">(close)</a>
+            </h2>
+            <div class="card m-1">
+                <h3 class="card-title">Stastistics</h3>
+                <div>
+                    <span>Win {{ winInLast6(matches||[]) }} in last 6 matches</span><br/>
+                    <span>{{ scored(matches||[]) }} goals for</span><br/>
+                    <span>{{ against(matches||[]) }} goals against</span><br/>
+                    <span>Top score in a match {{ topScored(matches||[]) }}</span><br/>
+                    <span>Top scored match {{ topScoredMatch(matches||[]) }}</span>
+                </div>
             </div>
-            <div>
+            <div class="card m-1">
                 <h3>Next match</h3>
                 <div v-for="(match, index) in nextMatch" v-bind:key="index"> 
                     <div v-if="isHome(match)">
@@ -25,9 +30,9 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <h3>Lspanst 6 matches</h3>
-                <table>
+            <div class="card m-1">
+                <h3>Last 6 matches</h3>
+                <table class="table">
                     <tbody>
                         <tr v-for="match in (matches||[]).slice(0, 6) " v-bind:key="match.date">
                             <td>{{ match.date }}</td>

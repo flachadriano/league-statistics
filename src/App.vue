@@ -1,28 +1,36 @@
 <template>
   <div id="app">
     <Leagues v-on:league="changedLeague" />
-    <League v-bind:league="league" />
+    <League v-if="Object.keys(club).length == 0" v-bind:league="league" v-on:club="selectedClub" />
+    <Club v-bind:club="club" />
   </div>
 </template>
 
 <script>
 import Leagues from './components/Leagues';
 import League from './components/League';
+import Club from './components/Club';
 
 export default {
   name: 'App',
   components: {
     Leagues,
-    League
+    League,
+    Club
   },
   data() {
     return {
-      league: '--'
+      league: '--',
+      club: {}
     }
   },
   methods: {
     changedLeague(league) {
       this.league = league;
+      this.club = {};
+    },
+    selectedClub(club) {
+      this.club = club;
     }
   }
 }

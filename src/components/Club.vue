@@ -18,16 +18,7 @@
             <div class="card m-1">
                 <h3>Next match</h3>
                 <div v-for="(match, index) in nextMatch" v-bind:key="index"> 
-                    <div v-if="isHome(match)">
-                        <span>{{ match.team1.name }}</span>
-                        <span> X </span>
-                        <a href="#" v-on:click.prevent="compareClub(match.team2)">{{ match.team2.name }}</a>
-                    </div>
-                    <div v-else>
-                        <a href="#" v-on:click.prevent="compareClub(match.team1)">{{ match.team1.name }}</a>
-                        <span> X </span>
-                        <span>{{ match.team2.name }}</span>
-                    </div>
+                    <Match v-bind:club="club" v-bind:match="match" v-on:select-club="compareClub" />
                 </div>
             </div>
             <div class="card m-1">
@@ -50,8 +41,13 @@
 </template>
 
 <script>
+import Match from './Match';
+
 export default {
     props: ['league', 'club'],
+    components: {
+        Match
+    },
     methods: {
         isHome(match) {
             return match.team1.code == this.club.code;

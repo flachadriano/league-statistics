@@ -17,18 +17,26 @@ export default {
         }
     },
     asyncComputed: {
-        async clubs() {
-            if (Object.keys(this.league).length > 0) {
-                const sortByName = (a, b) => {
-                    var x = a.name.toLowerCase();
-                    var y = b.name.toLowerCase();
-                    if (x < y) return -1;
-                    if (x > y) return 1;
-                    return 0;
-                };
+        clubs: {
+            get() {
+                fetch('https://api.football-data.org/v2/competitions/', {
+                    headers: {
+                        'API-Key': '0ade160701354ee0be1e89346c669dda'
+                    }
+                }).then(r => r.json()).then(d => console.log(d));
+                if (Object.keys(this.league).length > 0) {
+                    const sortByName = (a, b) => {
+                        var x = a.name.toLowerCase();
+                        var y = b.name.toLowerCase();
+                        if (x < y) return -1;
+                        if (x > y) return 1;
+                        return 0;
+                    };
 
-                return await loadClubs(this.league).then(clubs => clubs.sort(sortByName));
-            } else {
+                    return loadClubs(this.league).then(clubs => clubs.sort(sortByName));
+                }
+            },
+            default() {
                 return [];
             }
         }

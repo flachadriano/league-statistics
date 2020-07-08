@@ -8,8 +8,15 @@ export function loadRounds(league) {
     return fetch(url).then(r => r.json()).then(data => data.rounds);
 }
 
-export function loadMatches(league) {
-    return loadRounds(league).then(rounds => rounds.map(r => r.matches).reduce((a, b) => a.concat(b), []));
+export function loadMatches(league, club) {
+    return loadRounds(league).then(rounds => rounds.map(r => r.matches).reduce((a, b) => a.concat(b), []))
+        .then(matches => {
+            if (club) {
+                return matches.filter(m => m.team1.code == club.code || m.team2.code == club.code);
+            } else {
+                return matches;
+            }
+        });
 }
 
 export async function processClubs(league, orderBy) {

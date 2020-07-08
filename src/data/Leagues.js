@@ -1,4 +1,6 @@
-export const leagues = [
+import { URL } from './Resources';
+
+export const footballdb = [
     {key: 'bl1920', value: 'Bundesliga (2019-20)', year: '2019-20', file: 'de.1.clubs.json', matches: 'de.1.json'},
     {key: 'll1920', value: 'La Liga (2019-20)', year: '2019-20', file: 'es.1.clubs.json', matches: 'es.1.json'},
     {key: 'fl1920', value: 'Ligue 1 (2019-20)', year: '2019-20', file: 'fr.1.clubs.json', matches: 'fr.1.json'},
@@ -6,8 +8,10 @@ export const leagues = [
     {key: 'sl1920', value: 'Serie A (2019-20)', year: '2019-20', file: 'it.1.clubs.json', matches: 'it.1.json'}
 ];
 
-export default leagues;
+export const footballData = [
+    {value: 'Bundesliga', url: `${URL}/competitions/2002`}
+]
 
 export function findLeague(key) {
-    return leagues.find(l => l.key == key);
+    return footballdb.find(l => l.key == key);
 }

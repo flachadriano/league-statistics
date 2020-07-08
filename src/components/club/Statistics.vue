@@ -2,12 +2,12 @@
     <div class="card m-1">
         <h3 class="card-title">Stastistics</h3>
         <div>
+            <span>Position: {{ position }}</span><br/>
             <span>Win {{ winInLast6() }} in last 6 matches</span><br/>
-            <span>{{ scored() }} goals for</span><br/>
-            <span>{{ against() }} goals against</span><br/>
-            <span>Top score in a match {{ topScored() }}</span><br/>
-            <span>Top scored match {{ topScoredMatch() }}</span><br/>
-            <!-- <span>Best in {{ rankedScore }}</span> -->
+            <span>{{ scored() }} goals for (average {{ (scored() / matches.length).toFixed(2) }} - {{ rankedScore }} best attack)</span><br/>
+            <span>{{ against() }} goals against (against {{ (against() / matches.length).toFixed(2) }} - {{ rankedAgainst }} best defense)</span><br/>
+            <span>Top score of team in a match {{ topScored() }}</span><br/>
+            <span>Top scored total in a match {{ topScoredMatch() }}</span><br/>
         </div>
     </div>
 </template>
@@ -46,10 +46,28 @@ export default {
         }
     },
     asyncComputed: {
+        position: {
+            async get() {
+                const teams = await processClubs(this.league, 'points');
+                return teams.find((team, i) => team.code == this.club.code ? team.index = i+1 : false).index;
+            },
+            default() {
+                return '...'
+            }
+        },
         rankedScore: {
             async get() {
-                const teams = await processClubs(this.league);
-                return teams.find(team => team.code == this.club.code).goalsFor;
+                const teams = await processClubs(this.league, 'goalsFor');
+                return teams.find((team, i) => team.code == this.club.code ? team.index = i+1 : false).index;
+            },
+            default() {
+                return '...'
+            }
+        },
+        rankedAgainst: {
+            async get() {
+                const teams = await processClubs(this.league, 'goalsAgainst');
+                return teams.reverse().find((team, i) => team.code == this.club.code ? team.index = i+1 : false).index;
             },
             default() {
                 return '...'

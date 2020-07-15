@@ -14,26 +14,28 @@
 </template>
 
 <script>
-import { footballdb, findLeague, footballData } from '../data/Leagues';
+import footballdbLeagues from '../data/footballdb/Leagues';
+import footballDataLeagues from '../data/football-data/Leagues';
 
 export default {
     data() {
         return {
             api: 1,
             selected: 0,
-            leagues: [...footballdb]
+            leagues: [...footballdbLeagues]
         }
     },
     watch: {
         api(value) {
             if (value == 1) {
-                this.leagues = footballdb;
+                this.leagues = footballdbLeagues;
             } else {
-                this.leagues = footballData;
+                this.leagues = footballDataLeagues;
             }
         },
         selected(value) {
-            this.$emit('league', findLeague(value));
+            const league = this.leagues.find(l => l.key == value);
+            this.$emit('league', league);
         }
     }
 }

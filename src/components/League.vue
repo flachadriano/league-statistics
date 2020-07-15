@@ -19,11 +19,6 @@ export default {
     asyncComputed: {
         clubs: {
             get() {
-                fetch('https://api.football-data.org/v2/competitions/', {
-                    headers: {
-                        'API-Key': '0ade160701354ee0be1e89346c669dda'
-                    }
-                }).then(r => r.json()).then(d => console.log(d));
                 if (Object.keys(this.league).length > 0) {
                     const sortByName = (a, b) => {
                         var x = a.name.toLowerCase();

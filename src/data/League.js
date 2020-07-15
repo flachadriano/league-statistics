@@ -1,6 +1,13 @@
+import apis from './Apis';
+import League from './football-data/League';
+import { loadClubsDb } from './footballdb/League';
+
 export function loadClubs(league) {
-    const url = `https://raw.githubusercontent.com/openfootball/football.json/master/${league.year}/${league.file}`;
-    return fetch(url).then(r => r.json()).then(data => data.clubs);
+    if (league.api == apis.footballdb) {
+        return loadClubsDb(league);
+    } else {
+        return new League(league).loadClubs(league);
+    }
 }
 
 export function loadRounds(league) {

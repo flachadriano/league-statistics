@@ -1,12 +1,14 @@
 import apis from './Apis';
-import League from './football-data/League';
-import { loadClubsDb } from './footballdb/League';
+import FootballDbLeague from './footballdb/League';
+import FootballDataLeague from './football-data/League';
 
-export function loadClubs(league) {
-    if (league.api == apis.footballdb) {
-        return loadClubsDb(league);
-    } else {
-        return new League(league).loadClubs(league);
+export function loadLeagueResources(api, league) {
+    if (league) {
+        if (api == apis.footballdb) {
+            return new FootballDbLeague(league);
+        } else {
+            return new FootballDataLeague(league);
+        }
     }
 }
 
@@ -27,7 +29,7 @@ export function loadMatches(league, club) {
 }
 
 export async function processClubs(league, orderBy) {
-    const clubs = await loadClubs(league);
+    const clubs = []; // await loadClubs(league);
     const matches = await loadMatches(league);
 
     let processedClubs = clubs.map(team => {

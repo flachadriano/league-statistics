@@ -4,6 +4,9 @@ export default class League {
 
     constructor(league) {
         this.league = league;
+
+        this.year = league.year;
+        this.matches = league.matches;
     }
 
     loadClubs() {

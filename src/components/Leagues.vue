@@ -36,6 +36,7 @@ export default {
                 this.leagues = footballDataLeagues;
             }
             this.selected = 0;
+            this.$emit('api', value);
         },
         selected(value) {
             const league = this.leagues.find(l => l.key == value);

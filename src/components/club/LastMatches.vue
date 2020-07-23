@@ -18,7 +18,7 @@
 
 <script>
 export default {
-    props: ['club', 'matches'],
+    props: ['club'],
     methods: {
         home(match) {
             const home = match.team1.code == this.club.code;
@@ -34,6 +34,18 @@ export default {
                 return win ? 'bg-primary' : 'bg-secondary';
             }
         },
+    },
+    asyncComputed: {
+        matches: {
+            get() {
+                if (this.club && Object.keys(this.club).length > 0) {
+                    return this.club.lastMatches();
+                }
+            },
+            default() {
+                return [{}];
+            }
+        }
     }
 }
 </script>

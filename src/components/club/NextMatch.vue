@@ -17,10 +17,8 @@
 </template>
 
 <script>
-import { loadMatches } from '../../data/League';
-
 export default {
-    props: ['league', 'club'],
+    props: ['club'],
     methods: {
         isHome(match) {
             console.log(match)
@@ -34,11 +32,10 @@ export default {
         match: {
             get() {
                 if (Object.keys(this.club).length > 0) {
-                    return loadMatches(this.league, this.club).then(matches => matches.filter(m => m.scored1 == null && m.scored2 == null)).then(m => {console.log(m); return m[0]});
+                    return this.club.nextMatch();
                 }
             },
             default() {
-                console.log('foi')
                 return {team1: {}, team2: {}};
             }
         }

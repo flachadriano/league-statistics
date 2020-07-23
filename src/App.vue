@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <Leagues v-on:league="changedLeague" />
+    <Leagues @api="selectApi" @league="selectLeague" />
     <League v-if="Object.keys(club).length == 0" 
-        v-bind:league="league" 
-        v-on:club="selectedClub" />
+        :api="api" :league="league" 
+        @club="selectedClub" />
     <div class="d-flex justify-content-center">
       <Club v-if="Object.keys(club).length > 0" 
           v-bind:league="league" 
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import apis from './data/Apis';
 import Leagues from './components/Leagues';
 import League from './components/League';
 import Club from './components/Club';
@@ -32,13 +33,17 @@ export default {
   },
   data() {
     return {
+      api: apis.footballdb,
       league: {},
       club: {},
       compareClub: {}
     }
   },
   methods: {
-    changedLeague(league) {
+    selectApi(api) {
+      this.api = api;
+    },
+    selectLeague(league) {
       this.league = league;
       this.club = {};
       this.compareClub = {};

@@ -5,8 +5,8 @@
             <span>Position: {{ position }}</span><br/>
             <span>Win {{ winInLast6 }} in last 6 matches</span><br/>
             <span>{{ scored }} goals for (average {{ scoredPerMatch }} - {{ rankedScore }} best attack)</span><br/>
-            <!-- <span>{{ against() }} goals against (against {{ (against() / matches.length).toFixed(2) }} - {{ rankedAgainst }} best defense)</span><br/>
-            <span>Top score of team in a match {{ topScored() }}</span><br/>
+            <span>{{ against }} goals against (against {{ againstPerMatch }} - {{ rankedAgainst }} best defense)</span><br/>
+            <!-- <span>Top score of team in a match {{ topScored() }}</span><br/>
             <span>Top scored total in a match {{ topScoredMatch() }}</span><br/> -->
         </div>
     </div>
@@ -16,12 +16,6 @@
 export default {
     props: ['club', 'matches'],
     methods: {
-        // isHome(match) {
-        //     return match.team1.code == this.club.code;
-        // },
-        // against() {
-        //     return this.matches.reduce((acc, match) => this.isHome(match) ? acc + match.score2 : acc + match.score1, 0);
-        // },
         // topScored() {
         //     return Math.max(...this.matches.map(match => this.isHome(match) ? match.score1 : match.score2));
         // },
@@ -44,25 +38,16 @@ export default {
         },
         async rankedScore() {
             return this.club.rankedScore();
+        },
+        async against() {
+            return this.club.against();
+        },
+        async againstPerMatch() {
+            return 0;
+        },
+        async rankedAgainst() {
+            return 0
         }
-        // rankedScore: {
-        //     async get() {
-        //         const teams = await this.club.processClubs('goalsFor');
-        //         return teams.find((team, i) => team.code == this.club.code ? team.index = i+1 : false).index;
-        //     },
-        //     default() {
-        //         return '...'
-        //     }
-        // },
-        // rankedAgainst: {
-        //     async get() {
-        //         const teams = await this.club.processClubs('goalsAgainst');
-        //         return teams.reverse().find((team, i) => team.code == this.club.code ? team.index = i+1 : false).index;
-        //     },
-        //     default() {
-        //         return '...'
-        //     }
-        // }
     }
 }
 </script>

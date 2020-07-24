@@ -25,29 +25,35 @@ export default class Club {
 
     async scored() {
         const matches = await this.loadMatches();
-        const v = matches.reduce((acc, match) => {
-            const home = match.team1.code == this.club.code;
-            console.log(home);
-            acc += home ? match.score1 : match.score2;
-        }, 0);
-        return v;
+        return matches.reduce((acc, match) => acc + new Match(match).clubScored(this.club), 0);
     }
 
     async scoredPerMatch() {
-        return 0;
+        const matches = await this.loadMatches();
+        const scored = await this.scored();
+        return (scored / matches.length).toFixed(2);
     }
 
     async rankedScore() {
-        return 0;
+        const teams = await this.processClubs('goalsFor');
+        return teams.map(t => t.code).indexOf(this.club.code) + 1;
     }
 
-    async loadMatches() {
+    async against() {
+        const matches = await this.loadMatches();
+        return matches.reduce((acc, match) => acc + new Match(match).clubAgainst(this.club));
+    }
+
+    async loadMatches(allClubs = false) {
         const url = `${URL}/${this.league.year}/${this.league.matches}`;
         const rounds = await fetch(url).then(r => r.json()).then(data => data.rounds);
         const allMatches = rounds.reduce((acc, round) => acc.concat(round.matches), []);
         const allPlayedMatches = allMatches.filter(m => new Match(m).played()).reverse();
-        const clubMatches = allPlayedMatches.filter(m => new Match(m).club(this.club));
-        return clubMatches;
+        if (allClubs) {
+            return allPlayedMatches;
+        } else {
+            return allPlayedMatches.filter(m => new Match(m).club(this.club));
+        }
     }
 
     async nextMatch() {
@@ -60,46 +66,32 @@ export default class Club {
 
     async processClubs(orderBy) {
         const clubs = await this.league.loadClubs();
-        const matches = await this.loadMatches();
+        const matches = await this.loadMatches(true);
     
-        let processedClubs = clubs.map(team => {
+        let processedClubs = clubs.map(club => {
             let win = 0, draw = 0, lose = 0, goalsFor = 0, goalsAgainst = 0, points = 0, games = 0;
     
-            matches.filter(match => match.team1.code == team.code || match.team2.code == team.code)
-                .filter(match => match.score1 != null)
-                .forEach(match => {
-                    games++;
-                    const isHome = match.team1.code == team.code;
-                    if (isHome) {
-                        if (match.score1 == match.score2) {
-                            draw++;
-                            points++;
-                        } else if (match.score1 > match.score2) {
-                            win++;
-                            points += 3;
-                        } else {
-                            lose++;
-                        }
-                        goalsFor += match.score1;
-                        goalsAgainst += match.score2;
+            const clubMatches = matches.filter(match => new Match(match).played(club));
+            clubMatches.forEach(m => {
+                    const match = new Match(m);
+                    
+                    if (match.draw()) {
+                        draw++;
+                    } else if (match.win(club)) {
+                        win++;
                     } else {
-                        if (match.score1 == match.score2) {
-                            draw++;
-                            points++;
-                        } else if (match.score1 < match.score2) {
-                            win++;
-                            points += 3;
-                        } else {
-                            lose++;
-                        }
-                        goalsFor += match.score2;
-                        goalsAgainst += match.score1;
+                        lose++;
                     }
+                    
+                    games++;
+                    goalsFor += match.clubScored(club);
+                    goalsAgainst += match.clubAgainst(club);
                 });
             
-            return Object.assign(team, { win, draw, lose, goalsFor, goalsAgainst, points, games });
+            points = (win * 3) + draw;
+            return Object.assign(club, { win, draw, lose, goalsFor, goalsAgainst, points, games });
         });
-    
+        
         if (orderBy) {
             processedClubs = processedClubs.sort((a, b) => {
                 const x = a[orderBy], y = b[orderBy];

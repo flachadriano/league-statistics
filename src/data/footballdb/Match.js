@@ -46,11 +46,20 @@ export default class Match {
     }
 
     played(club) {
-        const past = this.match.score.ft[0] != null;
+        const past = !!this.match.score.ft;
         if (club) {
             return past && this.club(club);
         } else {
             return past;
+        }
+    }
+
+    goals() {
+        if (this.played()) {
+            const score = this.match.score.ft;
+            return score[0] + score[1];
+        } else {
+            return 0;
         }
     }
 

@@ -6,8 +6,8 @@
             <span>Win {{ winInLast6 }} in last 6 matches</span><br/>
             <span>{{ scored }} goals for (average {{ scoredPerMatch }} - {{ rankedScore }} best attack)</span><br/>
             <span>{{ against }} goals against (against {{ againstPerMatch }} - {{ rankedAgainst }} best defense)</span><br/>
-            <!-- <span>Top score of team in a match {{ topScored() }}</span><br/>
-            <span>Top scored total in a match {{ topScoredMatch() }}</span><br/> -->
+            <span>Top score of team in a match {{ topScored }}</span><br/>
+            <span>Top scored total in a match {{ topScoredMatch }}</span><br/>
         </div>
     </div>
 </template>
@@ -15,14 +15,6 @@
 <script>
 export default {
     props: ['club', 'matches'],
-    methods: {
-        // topScored() {
-        //     return Math.max(...this.matches.map(match => this.isHome(match) ? match.score1 : match.score2));
-        // },
-        // topScoredMatch() {
-        //     return Math.max(...this.matches.map(match => match.score1 + match.score2));
-        // }
-    },
     asyncComputed: {
         async position() {
             return await this.club.position();
@@ -31,22 +23,28 @@ export default {
             return await this.club.winInLast6();
         },
         async scored() {
-            return this.club.scored();
+            return await this.club.scored();
         },
         async scoredPerMatch() {
-            return this.club.scoredPerMatch();
+            return await this.club.scoredPerMatch();
         },
         async rankedScore() {
-            return this.club.rankedScore();
+            return await this.club.rankedScore();
         },
         async against() {
-            return this.club.against();
+            return await this.club.against();
         },
         async againstPerMatch() {
-            return 0;
+            return await this.club.againstPerMatch();
         },
         async rankedAgainst() {
-            return 0
+            return await this.club.rankedAgainst();
+        },
+        async topScored() {
+            return await this.club.topScored();
+        },
+        async topScoredMatch() {
+            return await this.club.topScoredMatch();
         }
     }
 }

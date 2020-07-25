@@ -41,7 +41,30 @@ export default class Club {
 
     async against() {
         const matches = await this.loadMatches();
-        return matches.reduce((acc, match) => acc + new Match(match).clubAgainst(this.club));
+        return matches.reduce((acc, match) => acc + new Match(match).clubAgainst(this.club), 0);
+    }
+
+    async againstPerMatch() {
+        const matches = await this.loadMatches();
+        const against = await this.against();
+        return (against / matches.length).toFixed(2);
+    }
+
+    async rankedAgainst() {
+        const teams = await this.processClubs('against');
+        return teams.map(t => t.code).indexOf(this.club.code) + 1;
+    }
+
+    async topScored() {
+        const matches = await this.loadMatches();
+        const goalsInMatch = matches.map(m => new Match(m).clubScored(this.club));
+        return Math.max(...goalsInMatch);
+    }
+
+    async topScoredMatch() {
+        const matches = await this.loadMatches();
+        const goalsInMatch = matches.map(m => new Match(m).goals());
+        return Math.max(...goalsInMatch);
     }
 
     async loadMatches(allClubs = false) {

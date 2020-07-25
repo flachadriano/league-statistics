@@ -4,7 +4,6 @@ import Match from './Match';
 export default class Club {
 
     constructor(league, club) {
-        console.log(league);
         this.league = league;
         this.club = club;
         
@@ -67,11 +66,14 @@ export default class Club {
         return Math.max(...goalsInMatch);
     }
 
-    async loadMatches(allClubs = false) {
+    async loadMatches(allClubs = false, played = true) {
         const url = `${URL}/${this.league.year}/${this.league.matches}`;
         const rounds = await fetch(url).then(r => r.json()).then(data => data.rounds);
         const allMatches = rounds.reduce((acc, round) => acc.concat(round.matches), []);
-        const allPlayedMatches = allMatches.filter(m => new Match(m).played()).reverse();
+        let allPlayedMatches = allMatches;
+        if (played) {
+            allPlayedMatches = allPlayedMatches.filter(m => new Match(m).played()).reverse()
+        }
         if (allClubs) {
             return allPlayedMatches;
         } else {
@@ -80,7 +82,22 @@ export default class Club {
     }
 
     async nextMatch() {
-        return this.loadMatches(this.league, this.club).then(matches => matches.filter(m => m.scored1 == null && m.scored2 == null));
+        const matches = await this.loadMatches(false, false);
+        console.log(matches);
+        const upcomingMatches = matches.filter(m => !new Match(m).played());
+        console.log(upcomingMatches);
+        if (upcomingMatches.length > 0) {
+            const match = upcomingMatches[0];
+            return {
+                ...match,
+                home: new Match(match).clubIsHome(this.club)
+            };
+        } else {
+            return {
+                team1: '--',
+                team2: '--'
+            };
+        }
     }
 
     async lastMatches() {

@@ -46,7 +46,7 @@ export default class Match {
     }
 
     played(club) {
-        const past = !!this.match.score.ft;
+        const past = !!this.match.score;
         if (club) {
             return past && this.club(club);
         } else {

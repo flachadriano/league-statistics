@@ -1,17 +1,17 @@
 <template>
     <div class="card m-1">
         <h3>Next match</h3>
-        <div v-if="isHome(match)">
-            <span>{{ match.date }}</span>
-            <span> {{ match.team1.name }}</span>
+        <div v-if="match && match.home">
+            <span>{{ match && match.date }}</span>
+            <span> {{ match && match.team1 }}</span>
             <span> X </span>
-            <a href="#" v-on:click.prevent="selectClub(match.team2)">{{ match.team2.name }}</a>
+            <a href="#" @click.prevent="selectClub(match.team2)">{{ match && match.team2 }}</a>
         </div>
         <div v-else>
-            <span>{{ match.date }}</span>
-            <a href="#" v-on:click.prevent="selectClub(match.team1)"> {{ match.team1.name }}</a>
+            <span>{{ match && match.date }}</span>
+            <a href="#" @click.prevent="selectClub(match.team1)"> {{ match && match.team1 }}</a>
             <span> X </span>
-            <span>{{ match.team2.name }}</span>
+            <span>{{ match && match.team2 }}</span>
         </div>
     </div>
 </template>
@@ -20,24 +20,13 @@
 export default {
     props: ['club'],
     methods: {
-        isHome(match) {
-            console.log(match)
-            return match.team1.code == this.club.code;
-        },
         selectClub(club) {
             this.$emit('select-club', club);
         }
     },
     asyncComputed: {
-        match: {
-            get() {
-                if (Object.keys(this.club).length > 0) {
-                    return this.club.nextMatch();
-                }
-            },
-            default() {
-                return {team1: {}, team2: {}};
-            }
+        async match() {
+            return await this.club.nextMatch();
         }
     }
 }

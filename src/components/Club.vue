@@ -6,21 +6,21 @@
                 <a class="close" href="#" @click.prevent="clear">(close)</a>
             </h2>
             <Statistics :club="club" />
-            <!-- <NextMatch v-bind:league="league" v-bind:club="club" v-on:select-club="compareClub" />
-            <LastMatches v-bind:club="club" v-bind:matches="matches" /> -->
+            <NextMatch :club="club" :select-club="compareClub" />
+            <!-- <LastMatches v-bind:club="club" v-bind:matches="matches" /> -->
         </div>
     </div>
 </template>
 
 <script>
 import Statistics from './club/Statistics';
-// import NextMatch from './club/NextMatch';
+import NextMatch from './club/NextMatch';
 // import LastMatches from './club/LastMatches';
 
 export default {
     props: ['league', 'club'],
     components: {
-        // NextMatch,
+        NextMatch,
         Statistics,
         // LastMatches
     },

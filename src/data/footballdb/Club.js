@@ -101,7 +101,15 @@ export default class Club {
     }
 
     async lastMatches() {
-        return this.loadMatches(this.league, this.club).then(matches => matches.filter(m => m.scored1 != null && m.scored2 != null));
+        const matches = await this.loadMatches();
+        return matches.slice(0, 6).map(m => {
+            return ({
+                ...m,
+                home: new Match(m).clubIsHome(this.club),
+                win: new Match(m).win(this.club),
+                draw: new Match(m).draw()
+            })
+        });
     }
 
     async processClubs(orderBy) {

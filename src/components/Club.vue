@@ -7,7 +7,7 @@
             </h2>
             <Statistics :club="club" />
             <NextMatch :club="club" :select-club="compareClub" />
-            <!-- <LastMatches v-bind:club="club" v-bind:matches="matches" /> -->
+            <LastMatches :club="club" />
         </div>
     </div>
 </template>
@@ -15,14 +15,14 @@
 <script>
 import Statistics from './club/Statistics';
 import NextMatch from './club/NextMatch';
-// import LastMatches from './club/LastMatches';
+import LastMatches from './club/LastMatches';
 
 export default {
     props: ['league', 'club'],
     components: {
         NextMatch,
         Statistics,
-        // LastMatches
+        LastMatches
     },
     methods: {
         compareClub(club) {
@@ -30,18 +30,6 @@ export default {
         },
         clear() {
             this.$emit('clear', {});
-        }
-    },
-    asyncComputed: {
-        matches: {
-            get() {
-                if (this.club && Object.keys(this.club).length > 0) {
-                    return this.club.loadMatches();
-                }
-            },
-            default() {
-                return [];
-            }
         }
     }
 }

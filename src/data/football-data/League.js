@@ -1,4 +1,4 @@
-import { HEADERS } from './Resources';
+import { URL, HEADERS } from './Resources';
 
 export default class League {
 

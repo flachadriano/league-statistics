@@ -18,7 +18,7 @@ import NextMatch from './club/NextMatch';
 import LastMatches from './club/LastMatches';
 
 export default {
-    props: ['league', 'club'],
+    props: ['club'],
     components: {
         NextMatch,
         Statistics,

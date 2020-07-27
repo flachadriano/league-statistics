@@ -6,14 +6,12 @@
         @club="selectedClub" />
     <div class="d-flex justify-content-center">
       <Club v-if="Object.keys(club).length > 0" 
-          v-bind:league="league" 
-          v-bind:club="club" 
-          v-on:compare-club="compareClubSelected"
-          v-on:clear="selectedClub" />
+          :club="club" 
+          @compare-club="compareClubSelected"
+          @clear="selectedClub" />
       <Club v-if="Object.keys(compareClub).length > 0" 
-          v-bind:league="league" 
-          v-bind:club="compareClub"
-          v-on:clear="compareClubSelected" />
+          :club="compareClub"
+          @clear="compareClubSelected" />
     </div>
   </div>
 </template>

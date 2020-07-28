@@ -3,15 +3,14 @@ import FootballDbClub from './footballdb/Club';
 import FootballDataLeague from './football-data/League';
 import FootballDataClub from './football-data/Club';
 
-export function loadClubResources(api, league, club) {
-    if (league && club) {
+export function loadClubResources(api, leagueObj, club) {
+    if (leagueObj && club) {
         if (api == apis.footballdb) {
-            return new FootballDbClub(league, club);
+            return new FootballDbClub(leagueObj, club);
         } else {
-            const loadedLeague = new FootballDataLeague();
-            loadedLeague.loadFromObject(league);
-            const clubStanding = loadedLeague.clubStanding(club);
-            return new FootballDataClub(club, clubStanding);
+            const { league, standing, teams } = leagueObj;
+            const loadedLeague = new FootballDataLeague(league, standing, teams);
+            return new FootballDataClub(club, loadedLeague);
         }
     }
 }

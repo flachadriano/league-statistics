@@ -2,44 +2,42 @@ import BaseClub from '../BaseClub';
 
 export default class Club extends BaseClub {
 
-    constructor(club, standingData) {
+    constructor(club, league) {
         super();
         this.club = club;
-        this.standingData = standingData;
+        this.league = league;
+        this.standing = league.clubStanding(club);
+        this.matches = league.clubMatches(club);
 
         this.name = club.name;
     }
 
     position() {
-        return this.standingData.position;
-    }
-
-    winInLast6() {
-        super.winInLast6();
+        return this.standing.position;
     }
 
     scored() {
-        return this.standingData.goalsFor;
+        return this.standing.goalsFor;
     }
 
     scoredPerMatch() {
-        return (this.scored() / this.standingData.playedGames).toFixed(2);
+        return (this.scored() / this.standing.playedGames).toFixed(2);
     }
 
     rankedScore() {
-        return super.rankedScore();
+        return this.league.standingBy('goalsFor', this.club);
     }
 
     against() {
-        return this.standingData.goalsAgainst;
+        return this.standing.goalsAgainst;
     }
 
     againstPerMatch() {
-        return (this.against() / this.standingData.playedGames).toFixed(2);
+        return (this.against() / this.standing.playedGames).toFixed(2);
     }
 
     rankedAgainst() {
-        return super.rankedAgainst();
+        return this.league.standingBy('goalsFor', this.club, true);
     }
 
     topScored() {

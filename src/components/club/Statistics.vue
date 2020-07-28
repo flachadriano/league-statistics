@@ -3,7 +3,6 @@
         <h3 class="card-title">Stastistics</h3>
         <div>
             <span>Position: {{ position }}</span><br/>
-            <span>Win {{ winInLast6 }} in last 6 matches</span><br/>
             <span>{{ scored }} goals for (average {{ scoredPerMatch }} - {{ rankedScore }} best attack)</span><br/>
             <span>{{ against }} goals against (against {{ againstPerMatch }} - {{ rankedAgainst }} best defense)</span><br/>
             <span>Top score of team in a match {{ topScored }}</span><br/>

@@ -1,4 +1,5 @@
 import BaseClub from '../BaseClub';
+import Match from './Match';
 
 export default class Club extends BaseClub {
 
@@ -25,7 +26,10 @@ export default class Club extends BaseClub {
     }
 
     rankedScore() {
-        return this.league.standingBy('goalsFor', this.club);
+        if (!this.rankedScoreV) {
+            this.rankedScoreV = this.league.standingBy('goalsFor', this.club);
+        }
+        return this.rankedScoreV;
     }
 
     against() {
@@ -37,15 +41,20 @@ export default class Club extends BaseClub {
     }
 
     rankedAgainst() {
-        return this.league.standingBy('goalsFor', this.club, true);
+        if (!this.rankedAgainstV) {
+            this.rankedAgainstV = this.league.standingBy('goalsAgainst', this.club, true);
+        }
+        return this.rankedAgainstV;
     }
 
     topScored() {
-        return super.topScored();
+        const scoredMatches = this.matches.map(m => new Match(m).scored(this.club));
+        return Math.max(...scoredMatches);
     }
 
     topScoredMatch() {
-        return super.topScoredMatch();
+        const scoredMatches = this.matches.map(m => new Match(m).goals());
+        return Math.max(...scoredMatches);
     }
 
     nextMatch() {

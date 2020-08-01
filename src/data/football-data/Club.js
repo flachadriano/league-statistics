@@ -58,7 +58,12 @@ export default class Club extends BaseClub {
     }
 
     nextMatch() {
-        return super.nextMatch();
+        const nextMatches = this.matches.filter(m => !new Match(m).played());
+        if (nextMatches.length > 0) {
+            return new Match(nextMatches[0]);
+        } else {
+            return {};
+        }
     }
 
     lastMatches() {

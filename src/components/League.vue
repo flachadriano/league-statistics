@@ -7,13 +7,11 @@
 </template>
 
 <script>
-import { loadClubResources } from '../data/Club';
-
 export default {
     props: ['api', 'league'],
     methods: {
         selectClub(club) {
-            this.$emit('club', loadClubResources(this.api, this.league, club));
+            this.$emit('club', club);
         }
     },
     asyncComputed: {

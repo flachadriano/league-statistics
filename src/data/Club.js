@@ -8,9 +8,13 @@ export function loadClubResources(api, leagueObj, club) {
         if (api == apis.footballdb) {
             return new FootballDbClub(leagueObj, club);
         } else {
+            let loadedClub = club;
             const { league, standing, teams, matches } = leagueObj;
             const loadedLeague = new FootballDataLeague(league, standing, teams, matches);
-            return new FootballDataClub(club, loadedLeague);
+            if (typeof club == 'string') {
+                loadedClub = teams.find(t => t.name == club);
+            }
+            return new FootballDataClub(loadedClub, loadedLeague);
         }
     }
 }

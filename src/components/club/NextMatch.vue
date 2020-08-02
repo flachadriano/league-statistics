@@ -1,13 +1,13 @@
 <template>
     <div class="card m-1">
         <h3>Next match</h3>
-        <div v-if="match && match.home">
+        <div v-if="match && match.team1 == club.name">
             <span>{{ match && match.date }}</span>
             <span> {{ match && match.team1 }}</span>
             <span> X </span>
             <a href="#" @click.prevent="selectClub(match.team2)">{{ match && match.team2 }}</a>
         </div>
-        <div v-else-if="match.date">
+        <div v-else-if="match && match.date">
             <span>{{ match && match.date }}</span>
             <a href="#" @click.prevent="selectClub(match.team1)"> {{ match && match.team1 }}</a>
             <span> X </span>

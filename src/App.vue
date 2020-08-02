@@ -7,6 +7,7 @@
     <div class="d-flex justify-content-center">
       <Club v-if="Object.keys(club).length > 0" 
           :club="club" 
+          @club="selectedClub"
           @compare-club="compareClubSelected"
           @clear="selectedClub" />
       <Club v-if="Object.keys(compareClub).length > 0" 
@@ -21,6 +22,7 @@ import apis from './data/Apis';
 import Leagues from './components/Leagues';
 import League from './components/League';
 import Club from './components/Club';
+import { loadClubResources } from './data/Club';
 
 export default {
   name: 'App',
@@ -47,11 +49,21 @@ export default {
       this.compareClub = {};
     },
     selectedClub(club) {
-      this.club = club;
+      let loadedClub = club;
+      if (club) {
+        loadedClub = loadClubResources(this.api, this.league, club)
+      }
+      console.log(loadedClub);
+      this.club = loadedClub;
       this.compareClub = {};
     },
     compareClubSelected(club) {
-      this.compareClub = club;
+      let loadedClub = club;
+      if (club) {
+        loadedClub = loadClubResources(this.api, this.league, club)
+      }
+      console.log(loadedClub);
+      this.compareClub = loadedClub;
     }
   }
 }

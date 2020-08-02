@@ -6,7 +6,7 @@
                 <a class="close" href="#" @click.prevent="clear">(close)</a>
             </h2>
             <Statistics :club="club" />
-            <NextMatch :club="club" :select-club="compareClub" />
+            <NextMatch :club="club" @select-club="compareClub" />
             <LastMatches :club="club" />
         </div>
     </div>

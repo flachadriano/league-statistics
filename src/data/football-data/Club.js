@@ -62,7 +62,7 @@ export default class Club extends BaseClub {
         if (nextMatches.length > 0) {
             return new Match(nextMatches[0]);
         } else {
-            return {};
+            return {team1: '--', team2: '--'};
         }
     }
 

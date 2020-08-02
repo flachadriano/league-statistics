@@ -22,6 +22,4 @@ for (const league of leagues) {
     });
 }
 
-console.log(exportableData);
-
 export default exportableData;

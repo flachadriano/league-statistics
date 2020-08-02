@@ -1,6 +1,6 @@
 export default class Match {
 
-    constructor(match) {
+    constructor(match, club) {
         this.data = match;
 
         this.date = match.utcDate;
@@ -9,6 +9,20 @@ export default class Match {
         this.score1 = this.data.score.fullTime.homeTeam;
         this.score2 = this.data.score.fullTime.awayTeam;
         this.draw = this.score1 == this.score2;
+
+        if (club) {
+            if (this.home(club)) {
+                this.teamScoreFirstHalf = this.data.score.halfTime.homeTeam;
+                this.teamAgainstFirstHalf = this.data.score.halfTime.awayTeam;
+            } else {
+                this.teamScoreFirstHalf = this.data.score.halfTime.awayTeam;
+                this.teamAgainstFirstHalf = this.data.score.halfTime.homeTeam;
+            }
+
+            this.teamScored = this.scored(club);
+            this.teamAgainst = this.against(club);
+            this.matchGoals = this.goals();
+        }
     }
 
     home(club) {
@@ -38,6 +52,14 @@ export default class Match {
             return this.data.score.fullTime.homeTeam;
         } else {
             return this.data.score.fullTime.awayTeam;
+        }
+    }
+
+    against(club) {
+        if (this.home(club)) {
+            return this.data.score.fullTime.awayTeam;
+        } else {
+            return this.data.score.fullTime.homeTeam;
         }
     }
 

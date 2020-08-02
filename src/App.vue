@@ -53,7 +53,6 @@ export default {
       if (club) {
         loadedClub = loadClubResources(this.api, this.league, club)
       }
-      console.log(loadedClub);
       this.club = loadedClub;
       this.compareClub = {};
     },
@@ -62,7 +61,6 @@ export default {
       if (club) {
         loadedClub = loadClubResources(this.api, this.league, club)
       }
-      console.log(loadedClub);
       this.compareClub = loadedClub;
     }
   }

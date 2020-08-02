@@ -66,11 +66,12 @@ export default class Club extends BaseClub {
         }
     }
 
-    lastMatches() {
+    lastMatches(quantity) {
         const playedMatches = this.matches.filter(m => new Match(m).played());
         if (playedMatches.length > 0) {
-            return playedMatches.reverse().slice(0, 6).map(m => {
-                const match = new Match(m);
+            return playedMatches.reverse().slice(0, quantity).map(m => {
+                const match = new Match(m, this.club);
+                match.win = match.win(this.club);
                 match.home = match.home(this.club);
                 return match;
             });

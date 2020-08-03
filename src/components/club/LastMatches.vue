@@ -1,5 +1,5 @@
 <template>    
-    <div class="card m-1">
+    <div style="background-color: #666" class="card m-1">
         <h3>Last 6 matches</h3>
         <div class="mb-2">
             <template v-for="match in (matches||[])">
@@ -47,7 +47,7 @@
                 </tr>
             </tbody>
         </table>
-        <table class="table">
+        <table style="color: #ddd" class="table">
             <tbody>
                 <tr v-for="match in (matches||[])" :key="match.date">
                     <td>{{ match.date }}</td>

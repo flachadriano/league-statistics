@@ -1,5 +1,5 @@
 <template>
-    <div class="card m-1">
+    <div style="background-color: #666" class="card m-1">
         <h3 class="card-title">Stastistics</h3>
         <div>
             <span>Position: {{ position }}</span><br/>

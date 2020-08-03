@@ -1,5 +1,5 @@
 <template>
-    <div class="card m-1">
+    <div style="background-color: #666" class="card m-1">
         <h3>Next match</h3>
         <div v-if="match && match.team1 == club.name">
             <span>{{ match && match.date }}</span>

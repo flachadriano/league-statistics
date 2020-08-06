@@ -14,19 +14,24 @@
 </template>
 
 <script>
-import apis from '../data/Apis';
-import footballdbLeagues from '../data/footballdb/Leagues';
-import footballDataLeagues from '../data/football-data/Leagues';
-import { loadLeagueResources } from '../data/League';
+import { mapGetters } from 'vuex'
+import apis from '../data/Apis'
+import footballdbLeagues from '../data/footballdb/Leagues'
+import footballDataLeagues from '../data/football-data/Leagues'
+import { loadLeagueResources } from '../data/League'
 
 export default {
     data() {
         return {
             apis,
-            api: apis.footballdb,
             selected: 0,
-            leagues: [...footballdbLeagues]
+            leagues: [...footballdbLeagues],
         }
+    },
+    computed: {
+        ...mapGetters([
+            'api'
+        ])
     },
     watch: {
         api(value) {

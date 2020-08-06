@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import apis from './data/Apis'
 import footballdbLeagues from './data/footballdb/Leagues'
 import footballDataLeagues from './data/football-data/Leagues'
+import { loadLeagueResources } from './data/League';
 
 Vue.use(Vuex);
 
@@ -12,12 +13,14 @@ export default new Vuex.Store({
         api: apis.footballdb,
         leagues: footballdbLeagues,
         league: 0,
+        clubs: [],
     },
     getters: {
         apis: state => state.apis,
         api: state => state.api,
         leagues: state => state.leagues,
         league: state => state.league,
+        clubs: state => state.clubs,
     },
     mutations: {
         changeApi: (state, apiEl) => {
@@ -35,6 +38,10 @@ export default new Vuex.Store({
         changeLeague: (state, leagueEl) => {
             const league = leagueEl.target.value;
             state.league = league;
+
+            const foundLeague = state.leagues.find(l => l.key == league);
+            const loadedLeague = loadLeagueResources(state.api, foundLeague);
+            loadedLeague.loadClubs().then(clubs => state.clubs = clubs);
         },
     }
 });

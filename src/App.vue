@@ -1,9 +1,7 @@
 <template>
   <div id="app">
-    <Leagues @api="selectApi" @league="selectLeague" />
-    <League v-if="Object.keys(club).length == 0" 
-        :api="api" :league="league" 
-        @club="selectedClub" />
+    <Leagues></Leagues>
+    <League v-if="Object.keys(club).length == 0"></League>
     <div class="d-flex justify-content-center">
       <Club v-if="Object.keys(club).length > 0" 
           :club="club" 
@@ -18,7 +16,7 @@
 </template>
 
 <script>
-import apis from './data/Apis';
+import { mapGetters } from 'vuex'
 import Leagues from './components/Leagues';
 import League from './components/League';
 import Club from './components/Club';
@@ -33,16 +31,16 @@ export default {
   },
   data() {
     return {
-      api: apis.footballdb,
       league: {},
       club: {},
-      compareClub: {}
+      compareClub: {},
+      ...mapGetters([
+        'api',
+        'league',
+      ])
     }
   },
   methods: {
-    selectApi(api) {
-      this.api = api;
-    },
     selectLeague(league) {
       this.league = league;
       this.club = {};

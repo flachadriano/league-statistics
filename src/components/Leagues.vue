@@ -14,7 +14,6 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import { loadLeagueResources } from '../data/League'
 
 export default {
     computed: {
@@ -30,15 +29,6 @@ export default {
             'changeApi',
             'changeLeague',
         ])
-    },
-    watch: {
-        api(api) {
-            this.$emit('api', api);
-        },
-        league(value) {
-            const league = this.$store.state.leagues.find(l => l.key == value);
-            this.$emit('league', loadLeagueResources(this.api, league));
-        }
     }
 }
 </script>

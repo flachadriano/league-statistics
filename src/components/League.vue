@@ -7,23 +7,17 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-    props: ['api', 'league'],
+    computed: {
+        ...mapGetters([
+            'clubs'
+        ])
+    },
     methods: {
         selectClub(club) {
             this.$emit('club', club);
-        }
-    },
-    asyncComputed: {
-        clubs: {
-            get() {
-                if (this.league && Object.keys(this.league).length > 0) {
-                    return this.league.loadClubs();
-                }
-            },
-            default() {
-                return [];
-            }
         }
     }
 }

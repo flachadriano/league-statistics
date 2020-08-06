@@ -63,8 +63,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-    props: ['club'],
+    computed: {
+        ...mapGetters([
+            'club'
+        ])
+    },
     asyncComputed: {
         async matches() {
             return await this.club.lastMatches(6);

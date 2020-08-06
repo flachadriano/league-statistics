@@ -3,14 +3,7 @@
     <Leagues></Leagues>
     <League v-if="Object.keys(club).length == 0"></League>
     <div class="d-flex justify-content-center">
-      <Club v-if="Object.keys(club).length > 0" 
-          :club="club" 
-          @club="selectedClub"
-          @compare-club="compareClubSelected"
-          @clear="selectedClub" />
-      <Club v-if="Object.keys(compareClub).length > 0" 
-          :club="compareClub"
-          @clear="compareClubSelected" />
+      <Club v-if="Object.keys(club).length > 0"></Club>
     </div>
   </div>
 </template>
@@ -20,7 +13,6 @@ import { mapGetters } from 'vuex'
 import Leagues from './components/Leagues';
 import League from './components/League';
 import Club from './components/Club';
-import { loadClubResources } from './data/Club';
 
 export default {
   name: 'App',
@@ -29,39 +21,11 @@ export default {
     League,
     Club
   },
-  data() {
-    return {
-      league: {},
-      club: {},
-      compareClub: {},
+  computed: {
       ...mapGetters([
-        'api',
-        'league',
+        'club',
       ])
-    }
   },
-  methods: {
-    selectLeague(league) {
-      this.league = league;
-      this.club = {};
-      this.compareClub = {};
-    },
-    selectedClub(club) {
-      let loadedClub = club;
-      if (club) {
-        loadedClub = loadClubResources(this.api, this.league, club)
-      }
-      this.club = loadedClub;
-      this.compareClub = {};
-    },
-    compareClubSelected(club) {
-      let loadedClub = club;
-      if (club) {
-        loadedClub = loadClubResources(this.api, this.league, club)
-      }
-      this.compareClub = loadedClub;
-    }
-  }
 }
 </script>
 

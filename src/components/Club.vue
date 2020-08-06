@@ -16,21 +16,18 @@
 import Statistics from './club/Statistics';
 import NextMatch from './club/NextMatch';
 import LastMatches from './club/LastMatches';
+import { mapGetters } from 'vuex'
 
 export default {
-    props: ['club'],
     components: {
         NextMatch,
         Statistics,
         LastMatches
     },
-    methods: {
-        compareClub(club) {
-            this.$emit('compare-club', club);
-        },
-        clear() {
-            this.$emit('clear', {});
-        }
+    computed: {
+        ...mapGetters([
+            'club'
+        ])
     }
 }
 </script>

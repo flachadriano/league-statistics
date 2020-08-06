@@ -12,8 +12,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-    props: ['club', 'matches'],
+    computed: {
+        ...mapGetters([
+            'club'
+        ])
+    },
     asyncComputed: {
         async position() {
             return await this.club.position();

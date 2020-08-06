@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div v-for="club in clubs" v-bind:key="club.code">
-            <a href='#' v-on:click.prevent="selectClub(club)">{{ club.name }}</a>
+        <div v-for="club in clubs" :key="club.code">
+            <a href='#' @click.prevent="selectClub(club)">{{ club.name }}</a>
         </div>
     </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
     computed: {
@@ -16,9 +16,9 @@ export default {
         ])
     },
     methods: {
-        selectClub(club) {
-            this.$emit('club', club);
-        }
+        ...mapMutations([
+            'selectClub'
+        ])
     }
 }
 </script>

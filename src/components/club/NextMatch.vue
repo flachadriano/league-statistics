@@ -20,8 +20,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-    props: ['club'],
+    computed: {
+        ...mapGetters([
+            'club'
+        ])
+    },
     methods: {
         selectClub(club) {
             this.$emit('select-club', club);

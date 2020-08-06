@@ -14,6 +14,7 @@ export default new Vuex.Store({
         leagues: footballdbLeagues,
         league: 0,
         clubs: [],
+        club: {},
     },
     getters: {
         apis: state => state.apis,
@@ -21,6 +22,7 @@ export default new Vuex.Store({
         leagues: state => state.leagues,
         league: state => state.league,
         clubs: state => state.clubs,
+        club: state => state.club,
     },
     mutations: {
         changeApi: (state, apiEl) => {
@@ -43,5 +45,8 @@ export default new Vuex.Store({
             const loadedLeague = loadLeagueResources(state.api, foundLeague);
             loadedLeague.loadClubs().then(clubs => state.clubs = clubs);
         },
+        selectClub: (state, club) => {
+            state.club = club;
+        }
     }
 });

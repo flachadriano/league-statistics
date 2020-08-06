@@ -2,8 +2,7 @@
     <div class="d-flex justify-content-center m-2">
         <div class="d-flex">
             <select class="custom-select" v-model="api">
-                <option selected :value="apis.footballdb">football.db</option>
-                <option :value="apis.footballData">football-data.org</option>
+                <option v-for="item in apis" :key="item" :value="item">{{ item }}</option>
             </select>
             <select class="custom-select" v-model="selected">
                 <option selected value="0">Select the league</option>
@@ -23,13 +22,13 @@ import { loadLeagueResources } from '../data/League'
 export default {
     data() {
         return {
-            apis,
             selected: 0,
             leagues: [...footballdbLeagues],
         }
     },
     computed: {
         ...mapGetters([
+            'apis',
             'api'
         ])
     },

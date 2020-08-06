@@ -3,11 +3,11 @@
         <div>
             <h2 class="d-flex justify-content-center">
                 <span>{{ club.name }}</span>
-                <a class="close" href="#" @click.prevent="clear">(close)</a>
+                <a class="close" href="#" @click.prevent="selectClub">(close)</a>
             </h2>
-            <Statistics :club="club" />
-            <NextMatch :club="club" @select-club="compareClub" />
-            <LastMatches :club="club" />
+            <Statistics></Statistics>
+            <NextMatch></NextMatch>
+            <LastMatches></LastMatches>
         </div>
     </div>
 </template>
@@ -16,7 +16,7 @@
 import Statistics from './club/Statistics';
 import NextMatch from './club/NextMatch';
 import LastMatches from './club/LastMatches';
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
     components: {
@@ -27,6 +27,11 @@ export default {
     computed: {
         ...mapGetters([
             'club'
+        ])
+    },
+    methods: {
+        ...mapMutations([
+            'selectClub'
         ])
     }
 }

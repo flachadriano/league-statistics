@@ -22,34 +22,34 @@ export default {
     },
     asyncComputed: {
         async position() {
-            return await this.club.position();
+            return await this.$store.state.club.position();
         },
         async winInLast6() {
-            return await this.club.winInLast6();
+            return await this.$store.state.club.winInLast6();
         },
         async scored() {
-            return await this.club.scored();
+            return await this.$store.state.club.scored();
         },
         async scoredPerMatch() {
-            return await this.club.scoredPerMatch();
+            return await this.$store.state.club.scoredPerMatch();
         },
         async rankedScore() {
-            return await this.club.rankedScore();
+            return await this.$store.state.club.rankedScore();
         },
         async against() {
-            return await this.club.against();
+            return await this.$store.state.club.against();
         },
         async againstPerMatch() {
-            return await this.club.againstPerMatch();
+            return await this.$store.state.club.againstPerMatch();
         },
         async rankedAgainst() {
-            return await this.club.rankedAgainst();
+            return await this.$store.state.club.rankedAgainst();
         },
         async topScored() {
-            return await this.club.topScored();
+            return await this.$store.state.club.topScored();
         },
         async topScoredMatch() {
-            return await this.club.topScoredMatch();
+            return await this.$store.state.club.topScoredMatch();
         }
     }
 }

@@ -4,6 +4,7 @@ import apis from './data/Apis'
 import footballdbLeagues from './data/footballdb/Leagues'
 import footballDataLeagues from './data/football-data/Leagues'
 import { loadLeagueResources } from './data/League';
+import { loadClubResources } from './data/Club';
 
 Vue.use(Vuex);
 
@@ -44,9 +45,11 @@ export default new Vuex.Store({
             const foundLeague = state.leagues.find(l => l.key == league);
             const loadedLeague = loadLeagueResources(state.api, foundLeague);
             loadedLeague.loadClubs().then(clubs => state.clubs = clubs);
+            state.loadedLeague = loadedLeague;
         },
         selectClub: (state, club) => {
-            state.club = club;
+            const loadedClub = loadClubResources(state.api, state.loadedLeague, club);
+            state.club = loadedClub;
         }
     }
 });

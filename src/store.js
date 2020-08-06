@@ -8,12 +8,14 @@ import { loadClubResources } from './data/Club';
 
 Vue.use(Vuex);
 
+const defaultLeague = {league: {key: 0}};
+
 export default new Vuex.Store({
     state: {
         apis,
         api: apis.footballdb,
         leagues: footballdbLeagues,
-        league: 0,
+        league: defaultLeague,
         clubs: [],
         club: {},
     },
@@ -22,8 +24,10 @@ export default new Vuex.Store({
         api: state => state.api,
         leagues: state => state.leagues,
         league: state => state.league,
+        leagueId: state => state.league.league.key,
         clubs: state => state.clubs,
         club: state => state.club,
+        hasSelectedClub: state => Object.keys(state.club).length > 0
     },
     mutations: {
         changeApi: (state, apiEl) => {
@@ -36,19 +40,19 @@ export default new Vuex.Store({
                 state.leagues = footballDataLeagues;
             }
 
-            state.league = 0;
+            state.league = defaultLeague;
+            state.club = {};
         },
         changeLeague: (state, leagueEl) => {
             const league = leagueEl.target.value;
-            state.league = league;
-
             const foundLeague = state.leagues.find(l => l.key == league);
             const loadedLeague = loadLeagueResources(state.api, foundLeague);
             loadedLeague.loadClubs().then(clubs => state.clubs = clubs);
-            state.loadedLeague = loadedLeague;
+            state.league = loadedLeague;
+            state.club = {};
         },
         selectClub: (state, club) => {
-            const loadedClub = loadClubResources(state.api, state.loadedLeague, club);
+            const loadedClub = loadClubResources(state.api, state.league, club);
             state.club = loadedClub;
         }
     }

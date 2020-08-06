@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <Leagues></Leagues>
-    <League v-if="Object.keys(club).length == 0"></League>
+    <League v-if="!hasSelectedClub"></League>
     <div class="d-flex justify-content-center">
-      <Club v-if="Object.keys(club).length > 0"></Club>
+      <Club v-if="hasSelectedClub"></Club>
     </div>
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
   },
   computed: {
       ...mapGetters([
-        'club',
+        'hasSelectedClub',
       ])
   },
 }

@@ -1,9 +1,13 @@
 <template>
-    <div>
-        <div v-for="club in clubs" :key="club.code">
-            <a href='#' @click.prevent="selectClub(club)">{{ club.name }}</a>
-        </div>
-    </div>
+    <table class="table">
+        <tbody>
+            <tr v-for="club in clubs" :key="club.code">
+                <td>
+                    <a href='#' @click.prevent="selectClub(club)">{{ club.name }}</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </template>
 
 <script>
@@ -22,3 +26,14 @@ export default {
     }
 }
 </script>
+
+<style>
+    a {
+        color: aliceblue;
+    }
+
+    a:hover {
+        color: aliceblue;
+        text-decoration: none;
+    }
+</style>

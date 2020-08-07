@@ -10,21 +10,23 @@ export default class League {
         this.matches = matches || [];
     }
 
-    loadClubs() {
-        return this.teams || fetch(`${URL}/${this.league.clubsUrl}`, HEADERS)
-            .then(r => r.json()).then(data => data.standings[0].table)
-            .then(standing => {
-                this.standing = standing;
-                this.teams = standing.map(team => team.team);
-                this.loadMatches();
-                return this.teams;
-            });
+    async loadClubs() {
+        if (!this.teams) {
+            this.standing = await this.loadStanding();
+            this.teams = this.standing.map(team => team.team);
+            this.matches = await this.loadMatches();
+        }
+        return Promise.resolve(this.teams);
+    }
+    
+    async loadStanding() {
+        return await fetch(`${URL}/${this.league.clubsUrl}`, HEADERS)
+            .then(r => r.json()).then(data => data.standings[0].table);
     }
 
-    loadMatches() {
-        fetch(`${URL}/${this.league.matchesUrl}`, HEADERS)
-            .then(r => r.json()).then(data => data.matches)
-            .then(matches => this.matches = matches);
+    async loadMatches() {
+        return await fetch(`${URL}/${this.league.matchesUrl}`, HEADERS)
+            .then(r => r.json()).then(data => data.matches);
     }
 
     clubStanding(club) {

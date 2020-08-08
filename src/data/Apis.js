@@ -12,7 +12,8 @@ import FootballDataClub from './football-data/Club';
 export const apis = {
     footballdb: 'footballdb',
     footballData: 'football-data',
-    betsapi: 'BetsApi'
+    betsapi: 'BetsApi',
+    apifootball: 'api-football'
 };
 
 export function loadLeagues(api) {

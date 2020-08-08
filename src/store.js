@@ -1,10 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import apis from './data/Apis'
-import footballdbLeagues from './data/footballdb/Leagues'
-import footballDataLeagues from './data/football-data/Leagues'
-import { loadLeagueResources } from './data/League';
-import { loadClubResources } from './data/Club';
+import { apis, loadLeagues, loadLeagueResources, loadClubResources } from './data/apis'
 
 Vue.use(Vuex);
 
@@ -13,8 +9,8 @@ const defaultLeague = {league: {key: 0}};
 export default new Vuex.Store({
     state: {
         apis,
-        api: apis.footballdb,
-        leagues: footballdbLeagues,
+        api: [],
+        leagues: [],
         league: defaultLeague,
         clubs: [],
         club: {},
@@ -33,13 +29,7 @@ export default new Vuex.Store({
         changeApi: (state, apiEl) => {
             const api = apiEl.target.value;
             state.api = api;
-
-            if (api == apis.footballdb) {
-                state.leagues = footballdbLeagues;
-            } else {
-                state.leagues = footballDataLeagues;
-            }
-
+            state.leagues = loadLeagues(api);
             state.league = defaultLeague;
             state.club = {};
         },

@@ -9,7 +9,7 @@ export default class JLeague {
     }
 
     loadTable() {
-        fetch(URL_TABLE);
+        fetch(URL_TABLE).then(r => console.log(r.html()));
     }
 
     loadFixtures() {

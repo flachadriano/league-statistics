@@ -1,5 +1,3 @@
-import apis from '../Apis';
-
 const leagues = [
     {code: 'ger', name: 'Bundesliga (GER - 2019-20)', id: 2002},
     {code: 'braa', name: 'Série A (BRA - 2019-20)', id: 2013},
@@ -16,7 +14,6 @@ for (const league of leagues) {
     exportableData.push({
         key: league.code,
         value: league.name,
-        api: apis.footballData,
         clubsUrl: `competitions/${league.id}/standings?season=2019&standingType=TOTAL`,
         matchesUrl: `competitions/${league.id}/matches?season=2019`
     });

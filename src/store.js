@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { apis, loadLeagues, loadLeagueResources, loadClubResources } from './data/apis'
+import BaseLeague from './data/base-league';
 
 Vue.use(Vuex);
 
@@ -37,7 +38,7 @@ export default new Vuex.Store({
             const league = leagueEl.target.value;
             const foundLeague = state.leagues.find(l => l.key == league);
             const loadedLeague = loadLeagueResources(state.api, foundLeague);
-            loadedLeague.loadClubs().then(clubs => state.clubs = clubs);
+            loadedLeague.loadClubs().then(clubs => state.clubs = BaseLeague.validateClubs(clubs));
             state.league = loadedLeague;
             state.club = {};
         },

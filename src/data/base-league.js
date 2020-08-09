@@ -2,6 +2,7 @@ export default class BaseLeague {
 
     constructor(league, standing, teams, matches) {
         this.league = league;
+        this.data = league;
         this.standing = standing || [];
         this.teams = teams;
         this.matches = matches || [];

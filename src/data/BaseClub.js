@@ -18,11 +18,6 @@ export default class BaseClub {
         return 0;
     }
 
-    winInLast6() {
-        console.warn('Implement method: winInLast6');
-        return 0;
-    }
-
     scored() {
         console.warn('Implement method: scored');
         return 0;
@@ -50,16 +45,6 @@ export default class BaseClub {
 
     rankedAgainst() {
         console.warn('Implement method: rankedAgainst');
-        return 0;
-    }
-
-    topScored() {
-        console.warn('Implement method: topScored');
-        return 0;
-    }
-
-    topScoredMatch() {
-        console.warn('Implement method: topScoredMatch');
         return 0;
     }
 

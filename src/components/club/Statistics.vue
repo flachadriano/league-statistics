@@ -5,8 +5,6 @@
             <span>Position: {{ position }}</span><br/>
             <span>{{ scored }} goals for (average {{ scoredPerMatch }} - {{ rankedScore }} best attack)</span><br/>
             <span>{{ against }} goals against (against {{ againstPerMatch }} - {{ rankedAgainst }} best defense)</span><br/>
-            <span>Top score of team in a match {{ topScored }}</span><br/>
-            <span>Top scored total in a match {{ topScoredMatch }}</span><br/>
         </div>
     </div>
 </template>
@@ -23,9 +21,6 @@ export default {
     asyncComputed: {
         async position() {
             return await this.$store.state.club.position();
-        },
-        async winInLast6() {
-            return await this.$store.state.club.winInLast6();
         },
         async scored() {
             return await this.$store.state.club.scored();
@@ -45,12 +40,6 @@ export default {
         async rankedAgainst() {
             return await this.$store.state.club.rankedAgainst();
         },
-        async topScored() {
-            return await this.$store.state.club.topScored();
-        },
-        async topScoredMatch() {
-            return await this.$store.state.club.topScoredMatch();
-        }
     }
 }
 </script>

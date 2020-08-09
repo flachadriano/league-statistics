@@ -38,14 +38,23 @@ export default new Vuex.Store({
             const league = leagueEl.target.value;
             const foundLeague = state.leagues.find(l => l.key == league);
             const loadedLeague = loadLeagueResources(state.api, foundLeague);
-            loadedLeague.loadClubs().then(clubs => state.clubs = BaseLeague.validateClubs(clubs));
+            if (loadedLeague.loadMatches) {
+                loadedLeague.loadMatches()
+                    .then(matches => state.matches = matches)
+                    .then(() => {
+                        loadedLeague.loadClubs()
+                            .then(clubs => state.clubs = BaseLeague.validateClubs(clubs))
+                    });
+            } else {
+                loadedLeague.loadClubs().then(clubs => state.clubs = BaseLeague.validateClubs(clubs));
+            }
             state.league = loadedLeague;
             state.club = {};
         },
         selectClub: (state, club) => {
             console.log(state.clubs);
             if (typeof club == 'object' && club.name) {
-                const loadedClub = loadClubResources(state.api, state.league, club, state.clubs);
+                const loadedClub = loadClubResources(state.api, state.league, club, state.clubs, state.matches);
                 state.club = loadedClub;
             } else {
                 state.club = {};

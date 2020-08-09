@@ -1,4 +1,5 @@
 import BaseClub from '../BaseClub';
+import Match from './match';
 
 export default class Club extends BaseClub {
 
@@ -28,8 +29,24 @@ export default class Club extends BaseClub {
     }
 
     rankedAgainst() {
-        const goalsAgainst = this.league.map(club => club.all.goalsAgainst).sort((a, b) => b - a);
+        const goalsAgainst = this.league.map(club => club.all.goalsAgainst).sort((a, b) => a - b);
         return goalsAgainst.indexOf(this.against()) + 1;
+    }
+
+    clubMatches(status = 'Match Finished') {
+        return this.matches
+            .filter(m => m.awayTeam.team_id == this.club.team_id || 
+                            m.homeTeam.team_id == this.club.team_id)
+            .filter(m => m.status == status);
+    }
+
+    nextMatch() {
+        const nextMatch = this.clubMatches('Not Started')[0];
+        if (nextMatch) {
+            return new Match(nextMatch);
+        } else {
+            return {};
+        }
     }
 
 }

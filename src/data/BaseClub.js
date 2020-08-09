@@ -1,8 +1,9 @@
 export default class BaseClub {
 
-    constructor(club, league) {
+    constructor(club, league, matches) {
         this.club = club;
         this.league = league;
+        this.matches = matches;
 
         this.name = club.name;
     }

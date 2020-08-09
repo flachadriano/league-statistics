@@ -10,6 +10,7 @@ import ApiFootballLeague from './api-football/league';
 
 import FootballDbClub from './footballdb/Club';
 import FootballDataClub from './football-data/Club';
+import ApiFootballClub from './api-football/club';
 
 export const apis = {
     footballdb: 'footballdb',
@@ -66,6 +67,9 @@ export function loadClubResources(api, leagueObj, club) {
             case apis.footballData:
                 return loadFootballData();
             case apis.betsapi:
+                return {};
+            case apis.apifootball:
+                return new ApiFootballClub(club);
             default:
                 alert('No API found');
         }

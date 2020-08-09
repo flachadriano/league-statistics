@@ -4,8 +4,7 @@ import Match from './Match';
 export default class Club extends BaseClub {
 
     constructor(club, league) {
-        super();
-        this.club = club;
+        super(club);
         this.league = league;
         this.standing = league.clubStanding(club);
         this.matches = league.clubMatches(club);

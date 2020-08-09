@@ -1,5 +1,9 @@
 export default class BaseClub {
 
+    constructor(club) {
+        this.club = club;
+    }
+
     position() {
         console.warn('Implement method: position');
         return 0;

@@ -43,9 +43,9 @@ export default new Vuex.Store({
             state.club = {};
         },
         selectClub: (state, club) => {
-            console.log(club);
+            console.log(state.clubs);
             if (typeof club == 'object' && club.name) {
-                const loadedClub = loadClubResources(state.api, state.league, club);
+                const loadedClub = loadClubResources(state.api, state.league, club, state.clubs);
                 state.club = loadedClub;
             } else {
                 state.club = {};

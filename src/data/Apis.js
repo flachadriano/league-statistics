@@ -49,7 +49,7 @@ export function loadLeagueResources(api, league) {
     }
 }
 
-export function loadClubResources(api, leagueObj, club) {
+export function loadClubResources(api, leagueObj, club, clubs) {
     const loadFootballData = function () {
         let loadedClub = club;
         const { league, standing, teams, matches } = leagueObj;
@@ -69,7 +69,7 @@ export function loadClubResources(api, leagueObj, club) {
             case apis.betsapi:
                 return {};
             case apis.apifootball:
-                return new ApiFootballClub(club);
+                return new ApiFootballClub(club, clubs);
             default:
                 alert('No API found');
         }

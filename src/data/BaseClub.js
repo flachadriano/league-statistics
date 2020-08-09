@@ -1,7 +1,16 @@
 export default class BaseClub {
 
-    constructor(club) {
+    constructor(club, league) {
         this.club = club;
+        this.league = league;
+
+        this.name = club.name;
+    }
+
+    static validate(club) {
+        if (!club.name) {
+            console.error('club should have name attribute.');
+        }
     }
 
     position() {

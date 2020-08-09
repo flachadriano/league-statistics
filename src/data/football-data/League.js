@@ -1,14 +1,8 @@
 import { URL, HEADERS } from './Resources';
+import BaseLeague from '../base-league';
 import Match from './Match';
 
-export default class League {
-
-    constructor(league, standing, teams, matches) {
-        this.league = league;
-        this.standing = standing || [];
-        this.teams = teams;
-        this.matches = matches || [];
-    }
+export default class League extends BaseLeague {
 
     async loadClubs() {
         if (!this.teams) {

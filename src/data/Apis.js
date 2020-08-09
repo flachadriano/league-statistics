@@ -1,10 +1,12 @@
 import footballdbLeagues from './footballdb/Leagues'
 import footballDataLeagues from './football-data/Leagues'
 import betsApiLeagues from './betsapi/leagues';
+import apiFootballLeagues from './api-football/leagues';
 
 import FootballDbLeague from './footballdb/League';
 import FootballDataLeague from './football-data/League';
 import BetsApiLeague from './betsapi/league';
+import ApiFootballLeague from './api-football/league';
 
 import FootballDbClub from './footballdb/Club';
 import FootballDataClub from './football-data/Club';
@@ -24,6 +26,8 @@ export function loadLeagues(api) {
             return footballDataLeagues;
         case apis.betsapi:
             return betsApiLeagues;
+        case apis.apifootball:
+            return apiFootballLeagues;
     }
 }
 
@@ -36,8 +40,10 @@ export function loadLeagueResources(api, league) {
                 return new FootballDataLeague(league);
             case apis.betsapi:
                 return new BetsApiLeague(league);
+            case apis.apifootball:
+                return new ApiFootballLeague(league);
             default:
-                alert('No API found')
+                alert('No API found');
         }
     }
 }

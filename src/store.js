@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { apis, loadLeagues, loadLeagueResources, loadClubResources } from './data/apis'
+import { apis, loadLeagues, loadLeagueResources, loadClubResources } from './data/resources'
 import BaseLeague from './data/base-league';
 
 Vue.use(Vuex);

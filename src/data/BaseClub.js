@@ -2,6 +2,7 @@ export default class BaseClub {
 
     constructor(club, league, matches) {
         this.club = club;
+        this.data = club;
         this.league = league;
         this.matches = matches;
 

@@ -63,7 +63,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
+import BaseMatch from '../../data/base-match';
 
 export default {
     computed: {
@@ -73,7 +74,11 @@ export default {
     },
     asyncComputed: {
         async matches() {
-            return await this.club.lastMatches(6);
+            const lastMatches = await this.club.lastMatches(6);
+            if (lastMatches.length > 0) {
+                BaseMatch.validatePlayed(lastMatches[0]);
+            }
+            return lastMatches;
         }
     }
 }

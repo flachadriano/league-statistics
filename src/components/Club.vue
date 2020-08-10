@@ -16,18 +16,14 @@
 import Statistics from './club/Statistics';
 import NextMatch from './club/NextMatch';
 import LastMatches from './club/LastMatches';
-import { mapGetters, mapMutations } from 'vuex'
+import { mapMutations } from 'vuex';
 
 export default {
+    props: ['club'],
     components: {
         NextMatch,
         Statistics,
         LastMatches
-    },
-    computed: {
-        ...mapGetters([
-            'club'
-        ])
     },
     methods: {
         ...mapMutations([

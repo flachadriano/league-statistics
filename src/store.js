@@ -15,6 +15,7 @@ export default new Vuex.Store({
         league: defaultLeague,
         clubs: [],
         club: {},
+        compareClub: {},
     },
     getters: {
         apis: state => state.apis,
@@ -24,6 +25,7 @@ export default new Vuex.Store({
         leagueId: state => state.league.league.key,
         clubs: state => state.clubs,
         club: state => state.club,
+        compareClub: state => state.compareClub,
         hasSelectedClub: state => Object.keys(state.club).length > 0
     },
     mutations: {
@@ -52,13 +54,17 @@ export default new Vuex.Store({
             state.club = {};
         },
         selectClub: (state, club) => {
-            console.log(state.clubs);
             if (typeof club == 'object' && club.name) {
                 const loadedClub = loadClubResources(state.api, state.league, club, state.clubs, state.matches);
                 state.club = loadedClub;
             } else {
                 state.club = {};
             }
+        },
+        selectCompareClub: (state, clubName) => {
+            const club = state.clubs.find(c => c.name == clubName);
+            const loadedClub = loadClubResources(state.api, state.league, club, state.clubs, state.matches);
+            state.compareClub = loadedClub;
         }
     }
 });

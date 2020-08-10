@@ -3,7 +3,8 @@
     <Leagues></Leagues>
     <League v-if="!hasSelectedClub"></League>
     <div class="d-flex justify-content-center">
-      <Club v-if="hasSelectedClub"></Club>
+      <Club v-if="hasSelectedClub" :club="club"></Club>
+      <Club v-if="Object.keys(compareClub).length > 0" :club="compareClub"></Club>
     </div>
   </div>
 </template>
@@ -24,6 +25,8 @@ export default {
   computed: {
       ...mapGetters([
         'hasSelectedClub',
+        'club',
+        'compareClub',
       ])
   },
 }

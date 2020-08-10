@@ -26,14 +26,3 @@ export default {
     }
 }
 </script>
-
-<style>
-    a {
-        color: aliceblue;
-    }
-
-    a:hover {
-        color: aliceblue;
-        text-decoration: none;
-    }
-</style>

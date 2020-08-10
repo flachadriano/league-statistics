@@ -36,4 +36,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
 }
+
+#app a {
+  color: #ddd;
+  font-size: 18px;
+}
+
+#app a:hover {
+  color: #ddd;
+  text-decoration: none;
+}
 </style>

@@ -6,7 +6,6 @@
                 <a class="close" href="#" @click.prevent="selectClub">(close)</a>
             </h2>
             <Statistics></Statistics>
-            <NextMatch></NextMatch>
             <LastMatches></LastMatches>
         </div>
     </div>
@@ -14,14 +13,12 @@
 
 <script>
 import Statistics from './club/Statistics';
-import NextMatch from './club/NextMatch';
 import LastMatches from './club/LastMatches';
 import { mapMutations } from 'vuex';
 
 export default {
     props: ['club'],
     components: {
-        NextMatch,
         Statistics,
         LastMatches
     },

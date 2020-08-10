@@ -1,13 +1,14 @@
-export default class Match {
+import BaseMatch from '../base-match';
+
+export default class Match extends BaseMatch {
 
     constructor(match, club) {
+        super(match.utcDate,
+            match.homeTeam.name, match.awayTeam.name,
+            match.score.fullTime.homeTeam, match.score.fullTime.awayTeam)
+
         this.data = match;
 
-        this.date = match.utcDate;
-        this.team1 = match.homeTeam.name;
-        this.team2 = match.awayTeam.name;
-        this.score1 = this.data.score.fullTime.homeTeam;
-        this.score2 = this.data.score.fullTime.awayTeam;
         this.draw = this.score1 == this.score2;
 
         if (club) {

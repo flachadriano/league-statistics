@@ -50,7 +50,7 @@ export default class Club extends BaseClub {
     }
 
     lastMatches() {
-        const lastMatches = this.clubMatches().splice(0, 6);
+        const lastMatches = this.clubMatches().reverse().splice(0, 6);
         if (lastMatches.length > 0) {
             return lastMatches.map(m => new Match(m, this.data));
         } else {

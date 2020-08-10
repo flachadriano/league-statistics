@@ -34,7 +34,9 @@ export default new Vuex.Store({
             state.api = api;
             state.leagues = loadLeagues(api);
             state.league = defaultLeague;
+            state.clubs = [];
             state.club = {};
+            state.compareClub = {};
         },
         changeLeague: (state, leagueEl) => {
             const league = leagueEl.target.value;
@@ -51,7 +53,9 @@ export default new Vuex.Store({
                 loadedLeague.loadClubs().then(clubs => state.clubs = BaseLeague.validateClubs(clubs));
             }
             state.league = loadedLeague;
+            state.clubs = [];
             state.club = {};
+            state.compareClub = {};
         },
         selectClub: (state, club) => {
             if (typeof club == 'object' && club.name) {
@@ -60,6 +64,7 @@ export default new Vuex.Store({
             } else {
                 state.club = {};
             }
+            state.compareClub = {};
         },
         selectCompareClub: (state, clubName) => {
             if (typeof clubName == 'string' && clubName) {

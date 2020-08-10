@@ -40,14 +40,14 @@
                     <td>{{ (matches||[]).reduce((acc, m) => acc + (m.teamScored > 0 ? 1 : 0), 0) }}/6</td>
                     <td>{{ (matches||[]).reduce((acc, m) => acc + (m.teamAgainst > 0 ? 1 : 0), 0) }}/6</td>
                 </tr>
-                <tr>
+                <tr class="border-bottom">
                     <td>Max in a match</td>
                     <td>{{ Math.max(...(matches||[]).map(m => m.teamScored)) }}</td>
                     <td>{{ Math.max(...(matches||[]).map(m => m.teamAgainst)) }}</td>
                 </tr>
             </tbody>
         </table>
-        <table style="color: #ddd" class="table">
+        <table style="color: #ddd">
             <tbody>
                 <tr v-for="match in (matches||[])" :key="match.date">
                     <td>{{ match.date }}</td>

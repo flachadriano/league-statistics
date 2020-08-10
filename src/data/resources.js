@@ -1,11 +1,9 @@
 import footballdbLeagues from './footballdb/Leagues'
 import footballDataLeagues from './football-data/Leagues'
-import betsApiLeagues from './betsapi/leagues';
 import apiFootballLeagues from './api-football/leagues';
 
 import FootballDbLeague from './footballdb/League';
 import FootballDataLeague from './football-data/League';
-import BetsApiLeague from './betsapi/league';
 import ApiFootballLeague from './api-football/league';
 
 import FootballDbClub from './footballdb/Club';
@@ -15,7 +13,6 @@ import ApiFootballClub from './api-football/club';
 export const apis = {
     footballdb: 'footballdb',
     footballData: 'football-data',
-    betsapi: 'BetsApi',
     apifootball: 'api-football'
 };
 
@@ -25,8 +22,6 @@ export function loadLeagues(api) {
             return footballdbLeagues;
         case apis.footballData:
             return footballDataLeagues;
-        case apis.betsapi:
-            return betsApiLeagues;
         case apis.apifootball:
             return apiFootballLeagues;
     }
@@ -39,8 +34,6 @@ export function loadLeagueResources(api, league) {
                 return new FootballDbLeague(league);
             case apis.footballData:
                 return new FootballDataLeague(league);
-            case apis.betsapi:
-                return new BetsApiLeague(league);
             case apis.apifootball:
                 return new ApiFootballLeague(league);
             default:
@@ -66,8 +59,6 @@ export function loadClubResources(api, leagueObj, club, clubs, matches) {
                 return new FootballDbClub(leagueObj, club);
             case apis.footballData:
                 return loadFootballData();
-            case apis.betsapi:
-                return {};
             case apis.apifootball:
                 return new ApiFootballClub(club, clubs, matches);
             default:

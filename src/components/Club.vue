@@ -5,8 +5,8 @@
                 <span>{{ club.name }}</span>
                 <a class="close" href="#" @click.prevent="selectClub">(close)</a>
             </h2>
-            <Statistics></Statistics>
-            <LastMatches></LastMatches>
+            <Statistics :club="club"></Statistics>
+            <LastMatches :club="club"></LastMatches>
         </div>
     </div>
 </template>
@@ -14,7 +14,6 @@
 <script>
 import Statistics from './club/Statistics';
 import LastMatches from './club/LastMatches';
-import { mapMutations } from 'vuex';
 
 export default {
     props: ['club'],
@@ -23,9 +22,9 @@ export default {
         LastMatches
     },
     methods: {
-        ...mapMutations([
-            'selectClub'
-        ])
+        selectClub() {
+            this.$emit('close', {});
+        }
     }
 }
 </script>

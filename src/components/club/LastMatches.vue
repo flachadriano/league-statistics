@@ -16,9 +16,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Matches in first half</td>
-                    <td>{{ (matches||[]).reduce((acc, m) => acc + (m.teamScoreFirstHalf > 0 ? 1 : 0), 0) }}</td>
-                    <td>{{ (matches||[]).reduce((acc, m) => acc + (m.teamAgainstFirstHalf > 0 ? 1 : 0), 0) }}</td>
+                    <td>First half</td>
+                    <td>{{ (matches||[]).reduce((acc, m) => acc + (m.teamScoreFirstHalf > 0 ? 1 : 0), 0) }}/6</td>
+                    <td>{{ (matches||[]).reduce((acc, m) => acc + (m.teamAgainstFirstHalf > 0 ? 1 : 0), 0) }}/6</td>
                 </tr>
                 <tr class="border-bottom">
                     <td>Max in first half</td>
@@ -26,9 +26,9 @@
                     <td>{{ Math.max(...(matches||[]).map(m => m.teamAgainstFirstHalf)) }}</td>
                 </tr>
                 <tr>
-                    <td>Matches in second half</td>
-                    <td>{{ (matches||[]).reduce((acc, m) => acc + ((m.teamScored - m.teamScoreFirstHalf) > 0 ? 1 : 0), 0) }}</td>
-                    <td>{{ (matches||[]).reduce((acc, m) => acc + ((m.teamAgainst - m.teamAgainstFirstHalf) > 0 ? 1 : 0), 0) }}</td>
+                    <td>Second half</td>
+                    <td>{{ (matches||[]).reduce((acc, m) => acc + ((m.teamScored - m.teamScoreFirstHalf) > 0 ? 1 : 0), 0) }}/6</td>
+                    <td>{{ (matches||[]).reduce((acc, m) => acc + ((m.teamAgainst - m.teamAgainstFirstHalf) > 0 ? 1 : 0), 0) }}/6</td>
                 </tr>
                 <tr class="border-bottom">
                     <td>Max in second half</td>
@@ -36,9 +36,9 @@
                     <td>{{ Math.max(...(matches||[]).map(m => m.teamAgainst - m.teamAgainstFirstHalf)) }}</td>
                 </tr>
                 <tr>
-                    <td>Matches</td>
-                    <td>{{ (matches||[]).reduce((acc, m) => acc + (m.teamScored > 0 ? 1 : 0), 0) }}</td>
-                    <td>{{ (matches||[]).reduce((acc, m) => acc + (m.teamAgainst > 0 ? 1 : 0), 0) }}</td>
+                    <td>Full time</td>
+                    <td>{{ (matches||[]).reduce((acc, m) => acc + (m.teamScored > 0 ? 1 : 0), 0) }}/6</td>
+                    <td>{{ (matches||[]).reduce((acc, m) => acc + (m.teamAgainst > 0 ? 1 : 0), 0) }}/6</td>
                 </tr>
                 <tr>
                     <td>Max in a match</td>
@@ -63,15 +63,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import BaseMatch from '../../data/base-match';
 
 export default {
-    computed: {
-        ...mapGetters([
-            'club'
-        ])
-    },
+    props: ['club'],
     asyncComputed: {
         async matches() {
             const lastMatches = await this.club.lastMatches(6);

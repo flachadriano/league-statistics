@@ -12,38 +12,33 @@
 
 <script>
 import NextMatch from './NextMatch';
-import { mapGetters } from 'vuex'
 
 export default {
+    props: ['club'],
     components: {
         NextMatch,
     },
-    computed: {
-        ...mapGetters([
-            'club'
-        ])
-    },
     asyncComputed: {
         async position() {
-            return await this.$store.state.club.position();
+            return await this.club.position();
         },
         async scored() {
-            return await this.$store.state.club.scored();
+            return await this.club.scored();
         },
         async scoredPerMatch() {
-            return await this.$store.state.club.scoredPerMatch();
+            return await this.club.scoredPerMatch();
         },
         async rankedScore() {
-            return await this.$store.state.club.rankedScore();
+            return await this.club.rankedScore();
         },
         async against() {
-            return await this.$store.state.club.against();
+            return await this.club.against();
         },
         async againstPerMatch() {
-            return await this.$store.state.club.againstPerMatch();
+            return await this.club.againstPerMatch();
         },
         async rankedAgainst() {
-            return await this.$store.state.club.rankedAgainst();
+            return await this.club.rankedAgainst();
         },
     }
 }

@@ -3,14 +3,14 @@
     <Leagues></Leagues>
     <League v-if="!hasSelectedClub"></League>
     <div class="d-flex justify-content-center">
-      <Club v-if="hasSelectedClub" :club="club"></Club>
-      <Club v-if="Object.keys(compareClub).length > 0" :club="compareClub"></Club>
+      <Club v-if="hasSelectedClub" :club="club" @close="selectClub"></Club>
+      <Club v-if="Object.keys(compareClub).length > 0" :club="compareClub" @close="selectCompareClub"></Club>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import Leagues from './components/Leagues';
 import League from './components/League';
 import Club from './components/Club';
@@ -29,6 +29,12 @@ export default {
         'compareClub',
       ])
   },
+  methods: {
+    ...mapMutations([
+        'selectClub',
+        'selectCompareClub',
+    ])
+  }
 }
 </script>
 

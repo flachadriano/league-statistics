@@ -5,21 +5,13 @@ import Match from './Match';
 export default class League extends BaseLeague {
 
     async loadClubs() {
-        if (!this.teams) {
-            this.standing = await this.loadStanding();
-            this.teams = this.standing.map(team => team.team);
-            this.matches = await this.loadMatches();
-        }
-        return Promise.resolve(this.teams);
-    }
-    
-    async loadStanding() {
-        return await fetch(`${URL}/${this.league.clubsUrl}`, HEADERS)
-            .then(r => r.json()).then(data => data.standings[0].table);
+        return fetch(`${URL}/${this.league.clubsUrl}`, HEADERS)
+            .then(r => r.json()).then(data => data.standings[0].table)
+            .then(t => t.map(c => ({ ...c, id: c.team.id, name: c.team.name })));
     }
 
     async loadMatches() {
-        return await fetch(`${URL}/${this.league.matchesUrl}`, HEADERS)
+        return fetch(`${URL}/${this.league.matchesUrl}`, HEADERS)
             .then(r => r.json()).then(data => data.matches);
     }
 

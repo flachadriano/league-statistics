@@ -42,16 +42,12 @@ export default new Vuex.Store({
             const league = leagueEl.target.value;
             const foundLeague = state.leagues.find(l => l.key == league);
             const loadedLeague = loadLeagueResources(state.api, foundLeague);
-            if (loadedLeague.loadMatches) {
-                loadedLeague.loadMatches()
-                    .then(matches => state.matches = matches)
-                    .then(() => {
-                        loadedLeague.loadClubs()
-                            .then(clubs => state.clubs = BaseLeague.validateClubs(clubs))
-                    });
-            } else {
-                loadedLeague.loadClubs().then(clubs => state.clubs = BaseLeague.validateClubs(clubs));
-            }
+            loadedLeague.loadMatches()
+                .then(matches => state.matches = matches)
+                .then(() => {
+                    loadedLeague.loadClubs()
+                        .then(clubs => state.clubs = BaseLeague.validateClubs(clubs))
+                });
             state.league = loadedLeague;
             state.clubs = [];
             state.club = {};

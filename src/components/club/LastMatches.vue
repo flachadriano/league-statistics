@@ -1,5 +1,5 @@
 <template>    
-    <div style="background-color: #666" class="card m-1">
+    <div style="background-color: #666" class="card p-2">
         <h3>Last 6 matches</h3>
         <div class="mb-2">
             <template v-for="match in (matches||[])">
@@ -47,6 +47,9 @@
                 </tr>
             </tbody>
         </table>
+        <div class="border-bottom">
+            <span>Over 2.5 goals in {{ matches.reduce((acc, m) => acc + (m.score1 + m.score2 > 2 ? 1 : 0), 0) }}/6 matches</span>
+        </div>
         <table style="color: #ddd">
             <tbody>
                 <tr v-for="match in (matches||[])" :key="match.date">

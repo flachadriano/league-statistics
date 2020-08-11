@@ -43,22 +43,12 @@ export function loadLeagueResources(api, league) {
 }
 
 export function loadClubResources(api, leagueObj, club, clubs, matches) {
-    const loadFootballData = function () {
-        let loadedClub = club;
-        const { league, standing, teams, matches } = leagueObj;
-        const loadedLeague = new FootballDataLeague(league, standing, teams, matches);
-        if (typeof club == 'string') {
-            loadedClub = teams.find(t => t.name == club);
-        }
-        return new FootballDataClub(loadedClub, loadedLeague);
-    }
-
     if (leagueObj && club) {
         switch (api) {
             case apis.footballdb:
                 return new FootballDbClub(leagueObj, club);
             case apis.footballData:
-                return loadFootballData();
+                return new FootballDataClub(club, clubs, matches);
             case apis.apifootball:
                 return new ApiFootballClub(club, clubs, matches);
             default:

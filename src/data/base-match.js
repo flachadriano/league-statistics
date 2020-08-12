@@ -21,6 +21,7 @@ export default class Match {
 
         ['win', 'draw', 'lose', 
         'teamScoreFirstHalf', 'teamAgainstFirstHalf', 
+        'teamScoreSecondHalf', 'teamAgainstSecondHalf', 
         'teamScored', 'teamAgainst'].forEach(attr => validate(attr));
     }
 

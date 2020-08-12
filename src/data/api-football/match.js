@@ -16,6 +16,9 @@ export default class Match extends BaseMatch {
             this.teamScoreFirstHalf = this.home ? firstHalf[0] : firstHalf[1];
             this.teamAgainstFirstHalf = this.home ? firstHalf[1] : firstHalf[0];
 
+            this.teamScoreSecondHalf = this.teamScored - this.teamScoreFirstHalf;
+            this.teamAgainstSecondHalf = this.teamAgainst - this.teamAgainstFirstHalf;
+
             this.win = this.teamScored > this.teamAgainst;
             this.draw = this.teamScored == this.teamAgainst;
             this.lose = this.teamScored < this.teamAgainst;

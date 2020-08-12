@@ -2,7 +2,7 @@
     <div style="background-color: #666" class="card p-2">
         <h3>Last 6 matches</h3>
         <div class="mb-2">
-            <template v-for="match in (matches||[])">
+            <template v-for="match in matches.data">
                 <span :key="match.date" class="bg-secondary m-1 pr-2 pl-2 pt-1 pb-1 rounded" v-if="match.draw">D</span>
                 <span :key="match.date" class="bg-success m-1 pr-2 pl-2 pt-1 pb-1 rounded" v-else-if="match.win">W</span>
                 <span :key="match.date" class="bg-danger m-1 pr-2 pl-2 pt-1 pb-1 rounded" v-else>L</span>
@@ -17,42 +17,43 @@
             <tbody>
                 <tr>
                     <td>First half</td>
-                    <td>{{ (matches||[]).reduce((acc, m) => acc + (m.teamScoreFirstHalf > 0 ? 1 : 0), 0) }}/6</td>
-                    <td>{{ (matches||[]).reduce((acc, m) => acc + (m.teamAgainstFirstHalf > 0 ? 1 : 0), 0) }}/6</td>
+                    <td>{{ matches.scoredInFirstHalf }}/{{ matches.data.length }}</td>
+                    <td>{{ matches.againstInFirstHalf }}/{{ matches.data.length }}</td>
                 </tr>
                 <tr class="border-bottom">
                     <td>Max in first half</td>
-                    <td>{{ Math.max(...(matches||[]).map(m => m.teamScoreFirstHalf)) }}</td>
-                    <td>{{ Math.max(...(matches||[]).map(m => m.teamAgainstFirstHalf)) }}</td>
+                    <td>{{ matches.maxScoredInFirstHalf }}</td>
+                    <td>{{ matches.maxAgainstInFirstHalf }}</td>
                 </tr>
                 <tr>
                     <td>Second half</td>
-                    <td>{{ (matches||[]).reduce((acc, m) => acc + ((m.teamScored - m.teamScoreFirstHalf) > 0 ? 1 : 0), 0) }}/6</td>
-                    <td>{{ (matches||[]).reduce((acc, m) => acc + ((m.teamAgainst - m.teamAgainstFirstHalf) > 0 ? 1 : 0), 0) }}/6</td>
+                    <td>{{ matches.scoredInSecondHalf }}/{{ matches.data.length }}</td>
+                    <td>{{ matches.againstInSecondHalf }}/{{ matches.data.length }}</td>
                 </tr>
                 <tr class="border-bottom">
                     <td>Max in second half</td>
-                    <td>{{ Math.max(...(matches||[]).map(m => m.teamScored - m.teamScoreFirstHalf)) }}</td>
-                    <td>{{ Math.max(...(matches||[]).map(m => m.teamAgainst - m.teamAgainstFirstHalf)) }}</td>
+                    <td>{{ matches.maxScoredInSecondHalf }}</td>
+                    <td>{{ matches.maxAgainstInSecondHalf }}</td>
                 </tr>
                 <tr>
                     <td>Full time</td>
-                    <td>{{ (matches||[]).reduce((acc, m) => acc + (m.teamScored > 0 ? 1 : 0), 0) }}/6</td>
-                    <td>{{ (matches||[]).reduce((acc, m) => acc + (m.teamAgainst > 0 ? 1 : 0), 0) }}/6</td>
+                    <td>{{ matches.scoredInFullTime }}/{{ matches.data.length }}</td>
+                    <td>{{ matches.againstInFullTime }}/{{ matches.data.length }}</td>
                 </tr>
                 <tr class="border-bottom">
                     <td>Max in a match</td>
-                    <td>{{ Math.max(...(matches||[]).map(m => m.teamScored)) }}</td>
-                    <td>{{ Math.max(...(matches||[]).map(m => m.teamAgainst)) }}</td>
+                    <td>{{ matches.maxScoredInFullTime }}</td>
+                    <td>{{ matches.maxAgainstInFullTime }}</td>
                 </tr>
             </tbody>
         </table>
         <div class="border-bottom">
-            <span>Over 2.5 goals in {{ matches.reduce((acc, m) => acc + (m.score1 + m.score2 > 2 ? 1 : 0), 0) }}/6 matches</span>
+            <span v-if="matches.over25 > (matches.data.length / 2)">Over 2.5 goals in {{ matches.over25 }}/{{ matches.data.length }} matches</span>
+            <span v-else>Less than 2.5 goals in {{ matches.data.length - matches.over25 }}/{{ matches.data.length }} matches</span>
         </div>
         <table style="color: #ddd">
             <tbody>
-                <tr v-for="match in (matches||[])" :key="match.date">
+                <tr v-for="match in matches.data" :key="match.date">
                     <td>{{ match.date }}</td>
                     <td> {{ match.team1 }}</td>
                     <td> {{ match.score1 }}</td>
@@ -67,16 +68,17 @@
 
 <script>
 import BaseMatch from '../../data/base-match';
+import LastMatchesProcessor from './LastMatchesProcessor';
 
 export default {
     props: ['club'],
-    asyncComputed: {
-        async matches() {
-            const lastMatches = await this.club.lastMatches(6);
+    computed: {
+        matches() {
+            const lastMatches = this.club.lastMatches(6);
             if (lastMatches.length > 0) {
                 BaseMatch.validatePlayed(lastMatches[0]);
             }
-            return lastMatches;
+            return new LastMatchesProcessor(lastMatches);
         }
     }
 }

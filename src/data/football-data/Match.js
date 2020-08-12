@@ -12,17 +12,21 @@ export default class Match extends BaseMatch {
         this.draw = this.score1 == this.score2;
 
         if (club) {
-            if (this.home(club)) {
-                this.teamScoreFirstHalf = this.data.score.halfTime.homeTeam;
-                this.teamAgainstFirstHalf = this.data.score.halfTime.awayTeam;
-            } else {
-                this.teamScoreFirstHalf = this.data.score.halfTime.awayTeam;
-                this.teamAgainstFirstHalf = this.data.score.halfTime.homeTeam;
-            }
+            this.home = this.data.homeTeam.name == club.name;
 
-            this.teamScored = this.scored(club);
-            this.teamAgainst = this.against(club);
-            this.matchGoals = this.goals();
+            const fullTime = this.data.score.fullTime;
+            this.teamScored = this.home ? fullTime.homeTeam : fullTime.awayTeam;
+            this.teamAgainst = this.home ? fullTime.awayTeam : fullTime.homeTeam;
+
+            const firstHalf = this.data.score.halfTime;
+            this.teamScoreFirstHalf = this.home ? firstHalf.homeTeam : firstHalf.awayTeam;
+            this.teamAgainstFirstHalf = this.home ? firstHalf.awayTeam : firstHalf.homeTeam;
+
+            this.teamScoreSecondHalf = this.teamScored - this.teamScoreFirstHalf;
+            this.teamAgainstSecondHalf = this.teamAgainst - this.teamAgainstFirstHalf;
+
+            this.win = this.teamScored > this.teamAgainst;
+            this.lose = this.teamScored < this.teamAgainst;
         }
     }
 

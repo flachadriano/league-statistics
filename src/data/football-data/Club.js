@@ -35,7 +35,7 @@ export default class Club extends BaseClub {
         return this.matches
             .filter(m => m.awayTeam.name == this.data.name ||
                         m.homeTeam.name == this.data.name)
-            .filter(m => (!played && m.status != 'FINISHED') ||
+            .filter(m => (!played && m.status == 'SCHEDULED') ||
                         (played && m.status == 'FINISHED'));
     }
 

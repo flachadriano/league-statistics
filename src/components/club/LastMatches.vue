@@ -48,7 +48,7 @@
             </tbody>
         </table>
         <div class="border-bottom">
-            <span v-if="matches.over25 > (matches.data.length / 2)">Over 2.5 goals in {{ matches.over25 }}/{{ matches.data.length }} matches</span>
+            <span v-if="matches.over25 >= (matches.data.length / 2)">Over 2.5 goals in {{ matches.over25 }}/{{ matches.data.length }} matches</span>
             <span v-else>Less than 2.5 goals in {{ matches.data.length - matches.over25 }}/{{ matches.data.length }} matches</span>
         </div>
         <table style="color: #ddd">

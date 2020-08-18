@@ -10,6 +10,7 @@ export default class Match {
 
         const [{ value: month },,{ value: day },,{ value: hour },,{ value: minute },,{ value: dayPeriod }] = dateTimeFormat.formatToParts(new Date(date));
         this.date = `${month}-${day} ${hour}:${minute} ${dayPeriod}`;
+        this.dateObj = new Date(date);
     }
 
     static validatePlayed(data) {

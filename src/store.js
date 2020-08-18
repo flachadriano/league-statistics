@@ -13,6 +13,7 @@ export default new Vuex.Store({
         api: [],
         leagues: [],
         league: defaultLeague,
+        loadingClubs: false,
         clubs: [],
         club: {},
         compareClub: {},
@@ -23,6 +24,7 @@ export default new Vuex.Store({
         leagues: state => state.leagues,
         league: state => state.league,
         leagueId: state => state.league.league.key,
+        loadingClubs: state => state.loadingClubs,
         clubs: state => state.clubs,
         club: state => state.club,
         compareClub: state => state.compareClub,
@@ -42,21 +44,25 @@ export default new Vuex.Store({
             const league = leagueEl.target.value;
             const foundLeague = state.leagues.find(l => l.key == league);
             const loadedLeague = loadLeagueResources(state.api, foundLeague);
-            loadedLeague.loadMatches()
-                .then(matches => state.matches = matches)
-                .then(() => {
-                    loadedLeague.loadClubs()
-                        .then(clubs => state.clubs = BaseLeague.validateClubs(clubs))
-                });
+
             state.league = loadedLeague;
             state.clubs = [];
             state.club = {};
             state.compareClub = {};
+            state.loadingClubs = true;
+
+            loadedLeague.loadMatches()
+                .then(matches => state.matches = matches)
+                .then(() => loadedLeague.loadClubs())
+                .then(clubs => BaseLeague.validateClubs(clubs))
+                .then(clubs => clubs.map(club => loadClubResources(state.api, state.league, club, clubs, state.matches)))
+                .then(clubs => clubs.sort((a, b) => a.nextMatch().dateObj - b.nextMatch().dateObj))
+                .then(clubs => state.clubs = clubs)
+                .then(() => state.loadingClubs = false);
         },
         selectClub: (state, club) => {
             if (typeof club == 'object' && club.name) {
-                const loadedClub = loadClubResources(state.api, state.league, club, state.clubs, state.matches);
-                state.club = loadedClub;
+                state.club = club;
             } else {
                 state.club = {};
             }

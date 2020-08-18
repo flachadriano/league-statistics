@@ -2,6 +2,7 @@
     <div style="background-color: #666" class="card p-2">
         <h3>Last 6 matches</h3>
         <div class="mb-2">
+            <!-- <race :matches="matches.data"></race> -->
             <template v-for="match in matches.data">
                 <span :key="match.date" class="bg-secondary m-1 pr-2 pl-2 pt-1 pb-1 rounded" v-if="match.draw">D</span>
                 <span :key="match.date" class="bg-success m-1 pr-2 pl-2 pt-1 pb-1 rounded" v-else-if="match.win">W</span>
@@ -48,8 +49,17 @@
             </tbody>
         </table>
         <div class="border-bottom">
-            <span v-if="matches.over25 >= (matches.data.length / 2)">Over 2.5 goals in {{ matches.over25 }}/{{ matches.data.length }} matches</span>
-            <span v-else>Less than 2.5 goals in {{ matches.data.length - matches.over25 }}/{{ matches.data.length }} matches</span>
+            <div>
+                <span v-if="matches.over25 >= (matches.data.length / 2)">Over 2.5 goals in {{ matches.over25 }}/{{ matches.data.length }} matches</span>
+                <span v-else>Less than 2.5 goals in {{ matches.data.length - matches.over25 }}/{{ matches.data.length }} matches</span>
+            </div>
+            <div>
+                <span v-if="matches.cleanSheet >= (matches.data.length / 2)">Clean sheet in {{ matches.cleanSheet }}/{{ matches.data.length }} matches</span>
+                <span v-else>Without clean sheet in {{ matches.cleanSheet }}/{{ matches.data.length }} matches</span>
+            </div>
+            <div>
+                <span v-if="matches.bothScore >= (matches.data.length / 2)">Both teams scoring {{ matches.bothScore }}/{{ matches.data.length }}</span>
+            </div>
         </div>
         <table style="color: #ddd">
             <tbody>
@@ -67,11 +77,15 @@
 </template>
 
 <script>
+// import Race from './Race';
 import BaseMatch from '../../data/base-match';
 import LastMatchesProcessor from './LastMatchesProcessor';
 
 export default {
     props: ['club'],
+    // components: {
+    //     race: Race
+    // },
     computed: {
         matches() {
             const lastMatches = this.club.lastMatches(6);

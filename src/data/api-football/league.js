@@ -5,7 +5,7 @@ export default class League extends BaseLeague {
 
     async loadClubs() {
         return fetch(`${URL}/${this.data.clubsUrl}`, HEADERS)
-            .then(r => r.json()).then(d => d.api.standings[0])
+            .then(r => r.json()).then(d => d.api.standings.reduce((acc, s) => acc.concat(s), []))
             .then(s => s.map(c => ({ ...c, id: c.team_id, name: c.teamName })));
     }
 

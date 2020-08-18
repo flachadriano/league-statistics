@@ -1,13 +1,20 @@
 <template>
-    <table class="table">
-        <tbody>
-            <tr v-for="club in clubs" :key="club.code">
-                <td>
-                    <a href='#' @click.prevent="selectClub(club)">{{ club.name }}</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="d-flex justify-content-center">
+        <table>
+            <tbody>
+                <tr v-for="club in clubs" :key="club.code">
+                    <td>
+                        <a href='#' @click.prevent="selectClub(club)">{{ club.name }}</a>
+                    </td>
+                    <td>
+                        <span v-if="club.nextMatch()">
+                            {{ club.nextMatch().date }}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </template>
 
 <script>

@@ -19,7 +19,7 @@ export default class LastMatches {
         this.maxAgainstInFullTime = Math.max(...this.data.map(m => m.teamAgainst));
 
         this.over25 = this.data.reduce((acc, m) => acc + (m.teamScored + m.teamAgainst > 2 ? 1 : 0), 0);
-        this.cleanSheet = this.data.reduce((acc, m) => acc + (m.teamAgainst > 0 ? 1 : 0), 0);
+        this.cleanSheet = this.data.reduce((acc, m) => acc + (m.teamAgainst == 0 ? 1 : 0), 0);
         this.bothScore = this.data.reduce((acc, m) => acc + ((m.teamScored > 0 && m.teamAgainst > 0) ? 1 : 0), 0)
     }
 

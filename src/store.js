@@ -71,8 +71,7 @@ export default new Vuex.Store({
         selectCompareClub: (state, clubName) => {
             if (typeof clubName == 'string' && clubName) {
                 const club = state.clubs.find(c => c.name == clubName);
-                const loadedClub = loadClubResources(state.api, state.league, club, state.clubs, state.matches);
-                state.compareClub = loadedClub;
+                state.compareClub = club;
             } else {
                 state.compareClub = {};
             }

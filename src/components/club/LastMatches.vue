@@ -2,12 +2,7 @@
     <div style="background-color: #666" class="card p-2">
         <h3>Last 6 matches</h3>
         <div class="mb-2">
-            <!-- <race :matches="matches.data"></race> -->
-            <template v-for="match in matches.data">
-                <span :key="match.date" class="bg-secondary m-1 pr-2 pl-2 pt-1 pb-1 rounded" v-if="match.draw">D</span>
-                <span :key="match.date" class="bg-success m-1 pr-2 pl-2 pt-1 pb-1 rounded" v-else-if="match.win">W</span>
-                <span :key="match.date" class="bg-danger m-1 pr-2 pl-2 pt-1 pb-1 rounded" v-else>L</span>
-            </template>
+            <race :matches="matches.data"></race>
         </div>
         <table class="mb-1">
             <thead class="border-bottom">
@@ -77,15 +72,15 @@
 </template>
 
 <script>
-// import Race from './Race';
+import Race from './Race';
 import BaseMatch from '../../data/base-match';
 import LastMatchesProcessor from './LastMatchesProcessor';
 
 export default {
     props: ['club'],
-    // components: {
-    //     race: Race
-    // },
+    components: {
+        race: Race
+    },
     computed: {
         matches() {
             const lastMatches = this.club.lastMatches(6);

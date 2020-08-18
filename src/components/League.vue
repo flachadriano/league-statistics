@@ -7,6 +7,9 @@
                         <a href='#' @click.prevent="selectClub(club)">{{ club.name }}</a>
                     </td>
                     <td>
+                        <race :matches="club.lastMatches()"></race>
+                    </td>
+                    <td>
                         <span v-if="club.nextMatch()">
                             {{ club.nextMatch().date }}
                         </span>
@@ -18,9 +21,13 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex';
+import Race from './club/Race';
 
 export default {
+    components: {
+        race: Race,
+    },
     computed: {
         ...mapGetters([
             'clubs'

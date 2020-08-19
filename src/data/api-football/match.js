@@ -12,7 +12,7 @@ export default class Match extends BaseMatch {
             this.teamScored = this.home ? data.goalsHomeTeam : data.goalsAwayTeam;
             this.teamAgainst = this.home ? data.goalsAwayTeam : data.goalsHomeTeam;
 
-            const firstHalf = data.score.halftime.split('-');
+            const firstHalf = (data.score.halftime||'0-0').split('-');
             this.teamScoreFirstHalf = this.home ? firstHalf[0] : firstHalf[1];
             this.teamAgainstFirstHalf = this.home ? firstHalf[1] : firstHalf[0];
 

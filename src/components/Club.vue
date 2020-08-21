@@ -2,7 +2,8 @@
     <div class="d-flex justify-content-center m-1">
         <div>
             <h2 class="d-flex justify-content-center">
-                <span>{{ club.name }}</span>
+                <img height="40px" :src="club.imageUrl">
+                <span class="ml-2">{{ club.name }}</span>
                 <a class="close" href="#" @click.prevent="selectClub">(close)</a>
             </h2>
             <Statistics :club="club"></Statistics>

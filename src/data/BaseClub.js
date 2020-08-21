@@ -7,6 +7,7 @@ export default class BaseClub {
         this.matches = matches;
 
         this.name = club.name;
+        this.imageUrl = club.team?.crestUrl || club.logo;
     }
 
     static validate(club) {

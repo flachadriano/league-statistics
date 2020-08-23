@@ -9,7 +9,7 @@ export default class LastMatches {
         this.maxAgainstInFirstHalf = Math.max(...this.data.map(m => m.teamAgainstFirstHalf));
 
         this.scoredInSecondHalf = this.data.reduce((acc, m) => acc + (m.teamScoreSecondHalf > 0 ? 1 : 0), 0);
-        this.againstInSecondHalf = this.data.reduce((acc, m) => acc + (m.teamScoreSecondHalf > 0 ? 1 : 0), 0);
+        this.againstInSecondHalf = this.data.reduce((acc, m) => acc + (m.teamAgainstSecondHalf > 0 ? 1 : 0), 0);
         this.maxScoredInSecondHalf = Math.max(...this.data.map(m => m.teamScoreSecondHalf));
         this.maxAgainstInSecondHalf = Math.max(...this.data.map(m => m.teamAgainstSecondHalf));
 

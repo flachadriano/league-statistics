@@ -53,7 +53,7 @@
                 <span v-else>Without clean sheet in {{ matches.data.length - matches.cleanSheet }}/{{ matches.data.length }} matches</span>
             </div>
             <div>
-                <span v-if="matches.bothScore >= (matches.data.length / 2)">Both teams scoring {{ matches.bothScore }}/{{ matches.data.length }}</span>
+                <span v-if="matches.bothScore >= (matches.data.length / 2)">Both teams scoring {{ matches.bothScore }}/{{ matches.data.length }} matches</span>
             </div>
         </div>
         <table style="color: #ddd">
